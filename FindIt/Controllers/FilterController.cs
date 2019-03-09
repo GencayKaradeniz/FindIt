@@ -13,7 +13,8 @@ namespace FindIt.Controllers
         {
             return View();
         }
-        public ActionResult Filter_Page()
+       
+       public ActionResult FilterPage()
         {
             return View();
         }
