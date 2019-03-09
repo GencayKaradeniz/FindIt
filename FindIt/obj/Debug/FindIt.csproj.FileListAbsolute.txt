@@ -89,3 +89,7 @@ C:\Users\Gencay Karadeniz\Desktop\FindIt\FindIt\obj\Debug\FindIt.csproj.CoreComp
 C:\Users\Gencay Karadeniz\Desktop\FindIt\FindIt\obj\Debug\FindIt.csproj.CopyComplete
 C:\Users\Gencay Karadeniz\Desktop\FindIt\FindIt\obj\Debug\FindIt.dll
 C:\Users\Gencay Karadeniz\Desktop\FindIt\FindIt\obj\Debug\FindIt.pdb
+C:\Users\Gencay Karadeniz\Desktop\FindIt\FindIt\bin\EntityFramework.dll
+C:\Users\Gencay Karadeniz\Desktop\FindIt\FindIt\bin\EntityFramework.SqlServer.dll
+C:\Users\Gencay Karadeniz\Desktop\FindIt\FindIt\bin\EntityFramework.xml
+C:\Users\Gencay Karadeniz\Desktop\FindIt\FindIt\bin\EntityFramework.SqlServer.xml
