@@ -151,10 +151,17 @@
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\leader-line.css" />
+    <Content Include="Content\style.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Images\dekor-yagli-boya-fircasi-2-adet__0827176528078006.jpeg" />
+    <Content Include="Images\finditlogo.png" />
+    <Content Include="Images\indir.jpe" />
+    <Content Include="Images\sidebar.jpg" />
+    <Content Include="Images\solucangubresi.jpeg" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="ApplicationInsights.config">
