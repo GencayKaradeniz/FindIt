@@ -1,0 +1,120 @@
+﻿
+@{
+    ViewBag.Title = "Kategori İşlemleri";
+    Layout = "~/Views/Shared/_LayoutPanel.cshtml";
+}
+
+
+<script>
+    $(document).ready(function () {
+        $("ul li").eq(1).addClass("active");
+    });</script>
+<div class="col-md-6">
+    <div class="card">
+        <div class="header">
+            <h4 class="title">Kategori İşlemleri</h4>
+        </div>
+        <div class="content">
+            <div class="row">
+                <div class="col-md-3">
+                    <label>Kategori Adı</label>
+                </div>
+                <div class="col-md-5">
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="categoryName" placeholder="Kategori Adı" value="" />
+                        <label id="error" Font-Bold="True" ForeColor="Red" Visible="False"></label>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <button id="categoryAdd" Class="btn btn-success btn-fill pull-right">Ekle</button>
+                </div>
+            </div>
+            <hr />
+            <div class="row">
+                <div class="col-md-3">
+                    <label>Kategoriler</label>
+                </div>
+                <div class="col-md-5">
+                    <div class="form-group">
+                        <select Class="form-control">
+                            <option value="categories">text</option>
+                        </select>
+                        <label id="errorDelete" Font-Bold="True" ForeColor="Red" Visible="False"></label>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <button id="categoryDelete" Class="btn btn-danger btn-fill pull-right">Sil</button>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+</div>
+<div class="col-md-6">
+    <div class="card">
+        <div class="header">
+            <h4 class="title">Alt Kategori İşlemleri</h4>
+        </div>
+        <div class="content">
+            <div class="row">
+                <div class="col-md-3">
+                    <label>Alt Kategori Adı</label>
+                </div>
+                <div class="col-md-5">
+                    <div class="form-group">
+                        <input type="text" id="subCategory" Class="form-control" placeholder="Alt Kategori adı giriniz." value="" />
+                        <label id="subCategoryError" Visible="False" Font-Bold="True" ForeColor="Red"></label>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3">
+                    <label>Kategori Adı</label>
+                </div>
+                <div class="col-md-5">
+                    <select id="CategoryforSubCategory" Class="form-control">
+                        <option>text</option>
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <button id="btnSubCategoryAdd" class="btn btn-success btn-fill pull-right">Ekle</button>
+                </div>
+            </div>
+            <hr />
+            <div class="row">
+                <div class="col-md-3">
+                    <label>Kategori Adı</label>
+                </div>
+                <div class="col-md-5">
+                    <div class="form-group">
+                        <select id="categorySelect" class="form-control">
+                            <option value="value">text</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-4"></div>
+            </div>
+            <div class="row">
+                <div class="col-md-3">
+                    <label>Alt Kategoriler</label>
+                </div>
+                <div class="col-md-5">
+                    <div class="form-group">
+                        <select id="SubCategoryDelete" Class="form-control">
+                            <option>text</option>
+                        </select>
+                        <label id="subCategoriesDeleteError" Visible="False" Font-Bold="True" ForeColor="Red"></label>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <button id="btnSubCategoryDelete" class="btn btn-danger btn-fill pull-right">Sil</button>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+</div>
+
+
