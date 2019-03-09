@@ -142,6 +142,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\CategoryOperationsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ProductDetailsController.cs" />
     <Compile Include="Controllers\ProductOperationsController.cs" />
@@ -263,6 +264,7 @@
     <Content Include="Views\ProductDetails\Detail.cshtml" />
     <Content Include="Views\Shared\_LayoutPanel.cshtml" />
     <Content Include="Views\ProductOperations\ProductOperations.cshtml" />
+    <Content Include="Views\CategoryOperations\CategoryOperations.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
