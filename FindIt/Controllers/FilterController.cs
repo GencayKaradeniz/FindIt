@@ -18,9 +18,10 @@ namespace FindIt.Controllers
         {
             return View();
         }
-        public ActionResult FilterPage(string productSearch)
+        [HttpPost]
+        public ActionResult FilterPage(string search)
         {
-            SqlParameter pSearch = new SqlParameter("@search", "gübre");
+            SqlParameter pSearch = new SqlParameter("@search",search);
             SqlParameter pStock = new SqlParameter("@stok", "yes");
             SqlParameter pSubCategory = new SqlParameter("@altkategori", 15);
             FinditDb db = new FinditDb();
