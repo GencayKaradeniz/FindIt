@@ -1,0 +1,123 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="FinditModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="FinditEntities" annotation:LazyLoadingEnabled="true">
+    <FunctionImport Name="sp_alterdiagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="version" Mode="In" Type="Int32" />
+      <Parameter Name="definition" Mode="In" Type="Binary" />
+    </FunctionImport>
+    <FunctionImport Name="sp_AltKategoriDelete">
+      <Parameter Name="AltKategoriId" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_AltKategoriEkle">
+      <Parameter Name="altKategoriAdi" Mode="In" Type="String" />
+      <Parameter Name="kategoriId" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_creatediagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="version" Mode="In" Type="Int32" />
+      <Parameter Name="definition" Mode="In" Type="Binary" />
+    </FunctionImport>
+    <FunctionImport Name="sp_dropdiagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_helpdiagramdefinition" ReturnType="Collection(FinditModel.sp_helpdiagramdefinition_Result)">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_helpdiagrams" ReturnType="Collection(FinditModel.sp_helpdiagrams_Result)">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_KategoriEkle">
+      <Parameter Name="categoryName" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="sp_KategoriSil">
+      <Parameter Name="categoryId" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_LogIn">
+      <Parameter Name="personelTC" Mode="In" Type="String" />
+      <Parameter Name="personelParola" Mode="In" Type="String" />
+      <Parameter Name="personelAd" Mode="InOut" Type="String" />
+      <Parameter Name="personelSoyad" Mode="InOut" Type="String" />
+      <Parameter Name="personelStatu" Mode="InOut" Type="Int32" />
+      <Parameter Name="personelID" Mode="InOut" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_ProductAdd">
+      <Parameter Name="productName" Mode="In" Type="String" />
+      <Parameter Name="productCost" Mode="In" Type="Decimal" />
+      <Parameter Name="productBarcode" Mode="In" Type="String" />
+      <Parameter Name="subcategoryId" Mode="In" Type="Int32" />
+      <Parameter Name="productStock" Mode="In" Type="Int32" />
+      <Parameter Name="personalId" Mode="In" Type="Int32" />
+      <Parameter Name="productEspecial" Mode="In" Type="String" />
+      <Parameter Name="productShelf" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_ProductDetails">
+      <Parameter Name="productPrice" Mode="InOut" Type="Decimal" />
+      <Parameter Name="productName" Mode="InOut" Type="String" />
+      <Parameter Name="productStock" Mode="InOut" Type="Int32" />
+      <Parameter Name="productSpecial" Mode="InOut" Type="String" />
+      <Parameter Name="productImageURL" Mode="InOut" Type="String" />
+      <Parameter Name="rafID" Mode="InOut" Type="Int32" />
+      <Parameter Name="productID" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_ProductUpdate">
+      <Parameter Name="productName" Mode="In" Type="String" />
+      <Parameter Name="barcode" Mode="In" Type="String" />
+      <Parameter Name="productCost" Mode="In" Type="Decimal" />
+      <Parameter Name="productStock" Mode="In" Type="Int32" />
+      <Parameter Name="productFeatures" Mode="In" Type="String" />
+      <Parameter Name="productSubCategory" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_RafEkle">
+      <Parameter Name="rafAdi" Mode="In" Type="String" />
+      <Parameter Name="rafSekli" Mode="In" Type="String" />
+      <Parameter Name="altKategori" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_SearchProductList" ReturnType="Collection(FinditModel.sp_SearchProductList_Result)">
+      <Parameter Name="search" Mode="In" Type="String" />
+      <Parameter Name="stok" Mode="In" Type="String" />
+      <Parameter Name="altkategori" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_SearchWithBarcode">
+      <Parameter Name="barcode" Mode="In" Type="String" />
+      <Parameter Name="productName" Mode="InOut" Type="String" />
+      <Parameter Name="productCategory" Mode="InOut" Type="Int32" />
+      <Parameter Name="productSubCategory" Mode="InOut" Type="Int32" />
+      <Parameter Name="productStock" Mode="InOut" Type="Int32" />
+      <Parameter Name="productFeatures" Mode="InOut" Type="String" />
+      <Parameter Name="productPicture" Mode="InOut" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="sp_SignUp">
+      <Parameter Name="name" Mode="In" Type="String" />
+      <Parameter Name="surName" Mode="In" Type="String" />
+      <Parameter Name="tc" Mode="In" Type="String" />
+      <Parameter Name="password" Mode="In" Type="String" />
+      <Parameter Name="statu" Mode="In" Type="Int32" />
+    </FunctionImport>
+  </EntityContainer>
+  <ComplexType Name="sp_helpdiagramdefinition_Result">
+    <Property Type="Int32" Name="version" Nullable="true" />
+    <Property Type="Binary" Name="definition" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="sp_helpdiagrams_Result">
+    <Property Type="String" Name="Database" Nullable="true" MaxLength="128" />
+    <Property Type="String" Name="Name" Nullable="false" MaxLength="128" />
+    <Property Type="Int32" Name="ID" Nullable="false" />
+    <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
+    <Property Type="Int32" Name="OwnerID" Nullable="false" />
+  </ComplexType>
+  <ComplexType Name="sp_SearchProductList_Result">
+    <Property Type="String" Name="Urun_Ad" Nullable="false" MaxLength="Max" />
+    <Property Type="Decimal" Name="Urun_Fiyat" Nullable="false" Precision="18" Scale="2" />
+    <Property Type="String" Name="UrunResim_Yol" Nullable="false" MaxLength="Max" />
+    <Property Type="Int32" Name="Urun_ID" Nullable="false" />
+    <Property Type="Int32" Name="Urun_Stok" Nullable="true" />
+    <Property Type="String" Name="AltKategori_Ad" Nullable="false" MaxLength="Max" />
+    <Property Type="Int32" Name="Expr1" Nullable="true" />
+  </ComplexType>
+</Schema>
