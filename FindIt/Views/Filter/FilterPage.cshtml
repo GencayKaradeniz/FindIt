@@ -1,4 +1,5 @@
-﻿@{
+﻿@model IEnumerable<FindIt.Models.SearchWithFilter>
+@{
     Layout = null;
 }
 <!DOCTYPE html>
@@ -85,42 +86,18 @@
                     <div class="card">
                         <div class="card-body">
                             <div class="row">
-                                <div class="col-sm-3" style="margin-top:2em;">
-                                    <div class="card">
-                                        <div class="card-body text-center">
-                                            <img src="~/Images/solucangubresi.jpeg" class="img-thumbnail" style="width:150px;height:150px;" />
-                                            <a href="#"><h4><p><strong>{1}</strong></p></h4></a>
-                                            <a href="#" class="btn btn-fill btn-info">İncele</a>
+                                @foreach (var item in Model)
+                                {
+                                    <div class="col-sm-3" style="margin-top:2em;">
+                                        <div class="card">
+                                            <div class="card-body text-center">
+                                                <img src="~/@item.ProductImageURL" class="img-thumbnail" style="width:150px;height:150px;" />
+                                                <a href="#"><h4><p><strong>@item.ProductName  @item.ProductPrice</strong></p></h4></a>
+                                                <a href="~/ProductDetails/Detail/@(item.ProductID)" class="btn btn-fill btn-info">İncele</a>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="col-sm-3" style="margin-top:2em;">
-                                    <div class="card">
-                                        <div class="card-body text-center">
-                                            <img src="~/Images/solucangubresi.jpeg" class="img-thumbnail" style="width:150px;height:150px;" />
-                                            <a href="#"><h4><p><strong>{1}</strong></p></h4></a>
-                                            <a href="#" class="btn btn-fill btn-info">İncele</a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-3" style="margin-top:2em;">
-                                    <div class="card">
-                                        <div class="card-body text-center">
-                                            <img src="~/Images/solucangubresi.jpeg" class="img-thumbnail" style="width:150px;height:150px;" />
-                                            <a href="#"><h4><p><strong>{1}</strong></p></h4></a>
-                                            <a href="#" class="btn btn-fill btn-info">İncele</a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-3" style="margin-top:2em;">
-                                    <div class="card">
-                                        <div class="card-body text-center">
-                                            <img src="~/Images/solucangubresi.jpeg" class="img-thumbnail" style="width:150px;height:150px;" />
-                                            <a href="#"><h4><p><strong>{1}</strong></p></h4></a>
-                                            <a href="#" class="btn btn-fill btn-info">İncele</a>
-                                        </div>
-                                    </div>
-                                </div>
+                                }
                             </div>
                         </div>
                     </div>

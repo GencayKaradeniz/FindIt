@@ -1,0 +1,102 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="FinditModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <Function Name="sp_alterdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+    <Parameter Name="version" Type="int" Mode="In" />
+    <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+  </Function>
+  <Function Name="sp_AltKategoriDelete" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="AltKategoriId" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_AltKategoriEkle" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="altKategoriAdi" Type="text" Mode="In" />
+    <Parameter Name="kategoriId" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_creatediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+    <Parameter Name="version" Type="int" Mode="In" />
+    <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+  </Function>
+  <Function Name="sp_dropdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_helpdiagramdefinition" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_helpdiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_KategoriEkle" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="categoryName" Type="text" Mode="In" />
+  </Function>
+  <Function Name="sp_KategoriSil" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="categoryId" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_LogIn" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="personelTC" Type="nvarchar" Mode="In" />
+    <Parameter Name="personelParola" Type="nvarchar" Mode="In" />
+    <Parameter Name="personelAd" Type="nvarchar" Mode="InOut" />
+    <Parameter Name="personelSoyad" Type="nvarchar" Mode="InOut" />
+    <Parameter Name="personelStatu" Type="int" Mode="InOut" />
+    <Parameter Name="personelID" Type="int" Mode="InOut" />
+  </Function>
+  <Function Name="sp_ProductAdd" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="productName" Type="text" Mode="In" />
+    <Parameter Name="productCost" Type="decimal" Mode="In" />
+    <Parameter Name="productBarcode" Type="text" Mode="In" />
+    <Parameter Name="subcategoryId" Type="int" Mode="In" />
+    <Parameter Name="productStock" Type="int" Mode="In" />
+    <Parameter Name="personalId" Type="int" Mode="In" />
+    <Parameter Name="productEspecial" Type="text" Mode="In" />
+    <Parameter Name="productShelf" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_ProductDetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="productPrice" Type="decimal" Mode="InOut" />
+    <Parameter Name="productName" Type="text" Mode="InOut" />
+    <Parameter Name="productStock" Type="int" Mode="InOut" />
+    <Parameter Name="productSpecial" Type="text" Mode="InOut" />
+    <Parameter Name="productImageURL" Type="text" Mode="InOut" />
+    <Parameter Name="rafID" Type="int" Mode="InOut" />
+    <Parameter Name="productID" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_ProductUpdate" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="productName" Type="text" Mode="In" />
+    <Parameter Name="barcode" Type="text" Mode="In" />
+    <Parameter Name="productCost" Type="decimal" Mode="In" />
+    <Parameter Name="productStock" Type="int" Mode="In" />
+    <Parameter Name="productFeatures" Type="text" Mode="In" />
+    <Parameter Name="productSubCategory" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_RafEkle" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="rafAdi" Type="nvarchar" Mode="In" />
+    <Parameter Name="rafSekli" Type="nvarchar" Mode="In" />
+    <Parameter Name="altKategori" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_SearchProductList" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="search" Type="nvarchar(max)" Mode="In" />
+    <Parameter Name="stok" Type="nvarchar" Mode="In" />
+    <Parameter Name="altkategori" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_SearchWithBarcode" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="barcode" Type="nvarchar" Mode="In" />
+    <Parameter Name="productName" Type="text" Mode="InOut" />
+    <Parameter Name="productCategory" Type="int" Mode="InOut" />
+    <Parameter Name="productSubCategory" Type="int" Mode="InOut" />
+    <Parameter Name="productStock" Type="int" Mode="InOut" />
+    <Parameter Name="productFeatures" Type="text" Mode="InOut" />
+    <Parameter Name="productPicture" Type="text" Mode="InOut" />
+  </Function>
+  <Function Name="sp_SignUp" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="name" Type="nvarchar" Mode="In" />
+    <Parameter Name="surName" Type="nvarchar" Mode="In" />
+    <Parameter Name="tc" Type="nvarchar" Mode="In" />
+    <Parameter Name="password" Type="nvarchar" Mode="In" />
+    <Parameter Name="statu" Type="int" Mode="In" />
+  </Function>
+  <EntityContainer Name="FinditModelStoreContainer" />
+</Schema>

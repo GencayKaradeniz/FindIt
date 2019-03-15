@@ -1,6 +1,6 @@
-﻿@{
+﻿@model FindIt.Models.ProductDetails
+@{
     Layout = null;
-    
 }
 <!DOCTYPE html>
 
@@ -38,7 +38,7 @@
                                         </ol>
                                         <div class="carousel-inner">
                                             <div class="item active">
-                                                <img id="productImage" class="img-responsive" style="width:200px;height:200px;" />
+                                                <img id="productImage" class="img-responsive" src="~/@Model.ProductImageURL" style="width:200px;height:200px;" />
                                             </div>
                                         </div>
                                         <a class="left carousel-control" href="#myCarousel" data-slide="prev">
@@ -59,7 +59,7 @@
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label id="labelProductName"></label>
+                                            <label id="labelProductName">@Model.ProductName</label>
                                         </div>
                                     </div>
                                 </div>
@@ -69,7 +69,7 @@
                                         <label>Ürün Fiyatı</label>
                                     </div>
                                     <div class="col-md-6">
-                                        <label id="labelProductCost"></label>
+                                        <label id="labelProductCost">@Model.ProductPrice</label>
                                     </div>
                                 </div>
                                 <hr />
@@ -78,7 +78,19 @@
                                         <label>Stok Bilgisi</label>
                                     </div>
                                     <div class="col-md-6">
-                                        <label id="labelStockInf"></label>
+                                        <label id="labelStockInf">
+                                            @{ string stock = "";
+                                                if (Model.ProductStock != 0)
+                                                {
+                                                    stock = "Stokta var.";
+                                                }
+                                                else
+                                                {
+                                                    stock = "Stokta yok.";
+                                                }
+                                            }
+                                            @stock
+                                        </label>
                                     </div>
                                 </div>
                                 <div class="clearfix"></div>
@@ -92,7 +104,7 @@
                             <label>Özellikler</label>
                         </div>
                         <div class="col-md-6">
-                            <label id="labelProductProperties"></label>
+                            <label id="labelProductProperties">@Model.ProductSpecial</label>
                         </div>
                     </div>
                 </div>
@@ -131,7 +143,7 @@
 @Scripts.Render("~/bundles/jquery")
 @Scripts.Render("~/bundles/bootstrap")
 <script>
-new LeaderLine(
+    new LeaderLine(
         document.getElementById('raf18'),
         document.getElementById('raf' +<%=rafID %> +''));
     $('#raf' +<%=rafID %> +'').css('box-shadow', '0px 1px 19px 9px rgba(255,255,255,1');

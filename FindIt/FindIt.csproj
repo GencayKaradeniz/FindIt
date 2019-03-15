@@ -159,6 +159,8 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\FinditDb.cs" />
+    <Compile Include="Models\ProductDetails.cs" />
+    <Compile Include="Models\SearchWithFilter.cs" />
     <Compile Include="Models\tbl_AltKategori.cs" />
     <Compile Include="Models\tbl_Harita.cs" />
     <Compile Include="Models\tbl_Kategori.cs" />
@@ -300,6 +302,9 @@
   <ItemGroup>
     <None Include="packages.config" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
