@@ -15,65 +15,68 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 <body class="body-costumer">
-    <form id="form1">
-        <div class="row justify-content-md-center" style="padding: 50px;">
-            <div class="col-md-6">
-                <div class="input-group">
+    <div class="row justify-content-md-center" style="padding: 50px;">
+        <div class="col-md-6">
+            <div class="input-group">
+                @using (Html.BeginForm("FilterPage", "Filter", FormMethod.Post))
+                {
                     <div class="col-md-10">
-                        <input type="text" class="form-control" required autofocus name="searchingPage" placeholder="Aradığınız ürünü buraya yazın" />
+                        <input type="text" class="form-control" id="inputlg" name="search" placeholder="Aradığınız ürünü buraya yazın" required autofocus />
+                        <input type="hidden" name="subCategory" value="0" />
+                        <input type="hidden" name="productStock" value="yes" />
                     </div>
                     <div class="col-md-2">
-                        <button id="btnSearch" Class="btn btn-fill btn-success">Ara</button>
+                        <input type="submit" id="search" class="btn btn-fill btn-success" name="searchBtn" value="Ara" style="width:200px;" />
                     </div>
-                </div>
+                }
             </div>
         </div>
-        <div class="container-fluid" style="padding:75px;">
-            <div class="row">
-                <div class="col-md-4 ">
-                    <div class="row">
-                        <div class="card" style="width: 70%; ">
+    </div>
+    <div class="container-fluid" style="padding:75px;">
+        <div class="row">
+            <div class="col-md-4 ">
+                <div class="row">
+                    <div class="card" style="width: 70%; ">
+                        <div class="card-body">
+                            <h4 class="card-title text-center" style="background-color:#FAF1F2">Filtre</h4>
                             <div class="card-body">
-                                <h4 class="card-title text-center" style="background-color:#FAF1F2">Filtre</h4>
-                                <div class="card-body">
-                                    <div class="row">
-                                        <div class="panel-group" style="width:100%">
-                                            <div class="panel panel-info">
-                                                <div class="panel-heading">
-                                                    <h4 class="panel-title">
-                                                        <a data-toggle="collapse" href="#collapse1" style="text-decoration:none;">Kategori</a>
-                                                    </h4>
-                                                </div>
-                                                <div id="collapse1" class="panel-collapse collapse">
-                                                    <ul class="list-group">
-                                                        <li class="list-group-item">One</li>
-                                                        <li class="list-group-item">Two</li>
-                                                        <li class="list-group-item">Three</li>
-                                                    </ul>
-                                                    <div class="panel-footer">Footer</div>
-                                                </div>
+                                <div class="row">
+                                    <div class="panel-group" style="width:100%">
+                                        <div class="panel panel-info">
+                                            <div class="panel-heading">
+                                                <h4 class="panel-title">
+                                                    <a data-toggle="collapse" href="#collapse1" style="text-decoration:none;">Kategori</a>
+                                                </h4>
+                                            </div>
+                                            <div id="collapse1" class="panel-collapse collapse">
+                                                <ul class="list-group">
+                                                    <li class="list-group-item">One</li>
+                                                    <li class="list-group-item">Two</li>
+                                                    <li class="list-group-item">Three</li>
+                                                </ul>
+                                                <div class="panel-footer">Footer</div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="row">
-                                        <div class="panel-group" style="width:100%">
-                                            <div class="panel panel-info">
-                                                <div class="panel-heading">
-                                                    <h4 class="panel-title">
-                                                        <a data-toggle="collapse" href="#collapse2" style="text-decoration:none;">Stok Durumu</a>
-                                                    </h4>
-                                                </div>
-                                                <div id="collapse2" class="panel-collapse collapse">
-                                                    <ul class="list-group">
-                                                        <li class="list-group-item">
-                                                            <input type="radio" id="inStock" value="in" />  Stokta var
+                                </div>
+                                <div class="row">
+                                    <div class="panel-group" style="width:100%">
+                                        <div class="panel panel-info">
+                                            <div class="panel-heading">
+                                                <h4 class="panel-title">
+                                                    <a data-toggle="collapse" href="#collapse2" style="text-decoration:none;">Stok Durumu</a>
+                                                </h4>
+                                            </div>
+                                            <div id="collapse2" class="panel-collapse collapse">
+                                                <ul class="list-group">
+                                                    <li class="list-group-item">
+                                                        <input type="radio" id="inStock" value="in" />  Stokta var
 
-                                                        </li>
-                                                        <li class="list-group-item">
-                                                            <input type="radio" id="outOfStock" value="out" />  Stokta yok
-                                                        </li>
-                                                    </ul>
-                                                </div>
+                                                    </li>
+                                                    <li class="list-group-item">
+                                                        <input type="radio" id="outOfStock" value="out" />  Stokta yok
+                                                    </li>
+                                                </ul>
                                             </div>
                                         </div>
                                     </div>
@@ -82,28 +85,28 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-8">
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="row">
-                                @foreach (var item in Model)
-                                {
-                                    <div class="col-sm-3" style="margin-top:2em;">
-                                        <div class="card">
-                                            <div class="card-body text-center">
-                                                <img src="~/@item.ProductImageURL" class="img-thumbnail" style="width:150px;height:150px;" />
-                                                <a href="#"><h4><p><strong>@item.ProductName  @item.ProductPrice</strong></p></h4></a>
-                                                <a href="~/ProductDetails/Detail/@(item.ProductID)" class="btn btn-fill btn-info">İncele</a>
-                                            </div>
+            </div>
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            @foreach (var item in Model)
+                            {
+                                <div class="col-sm-3" style="margin-top:2em;">
+                                    <div class="card">
+                                        <div class="card-body text-center">
+                                            <img src="~/@item.ProductImageURL" class="img-thumbnail" style="width:150px;height:150px;" />
+                                            <a href="#"><h4><p><strong>@item.ProductName  @item.ProductPrice</strong></p></h4></a>
+                                            <a href="~/ProductDetails/Detail/@(item.ProductID)" class="btn btn-fill btn-info">İncele</a>
                                         </div>
                                     </div>
-                                }
-                            </div>
+                                </div>
+                            }
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </form>
+    </div>
 </body>
 </html>

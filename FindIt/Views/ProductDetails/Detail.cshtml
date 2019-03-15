@@ -21,7 +21,6 @@
     <script src="Script/leader-line.min.js.js"></script>
 </head>
 <body class="body-costumer">
-    <form id="form1">
         <div class="row">
             <div class="col-md-6" style="padding: 50px;">
                 <div class="card" style="padding: 50px;">
@@ -113,14 +112,19 @@
                         <h4 class="title">Arama</h4>
                     </div>
                     <div class="content">
-                        <div class="form-group ">
-                            <div class="col-md-10">
-                                <input type="text" class="form-control" id="inputlg" name="search" placeholder="Aradığınız ürünü buraya yazın" />
+                        @using (Html.BeginForm("FilterPage", "Filter", FormMethod.Post))
+                        {
+                            <div class="form-group ">
+                                <div class="col-md-10">
+                                    <input type="text" class="form-control" id="inputlg" name="search" placeholder="Aradığınız ürünü buraya yazın" />
+                                    <input type="hidden" name="subCategory" value="0" />
+                                    <input type="hidden" name="productStock" value="yes" />
+                                </div>
+                                <div class="col-md-2">
+                                    <input type="submit" id="search" class="btn btn-success" name="searchBtn" value="Ara" style="width:50px;" />
+                                </div>
                             </div>
-                            <div class="col-md-2">
-                                <button id="btnSearch" class="btn btn-success" style="width:50px;">Ara</button>
-                            </div>
-                        </div>
+                        }
                     </div>
                 </div>
             </div>
@@ -138,7 +142,6 @@
                 </div>
             </div>
         </div>
-    </form>
 </body>
 @Scripts.Render("~/bundles/jquery")
 @Scripts.Render("~/bundles/bootstrap")
