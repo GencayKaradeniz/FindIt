@@ -19,13 +19,12 @@ namespace FindIt.Controllers
             return View();
         }
         [HttpPost]
-        public ActionResult FilterPage(string search)
+        public ActionResult FilterPage(string search, string subCategory, string productStock)
         {
-            SqlParameter pSearch = new SqlParameter("@search",search);
-            SqlParameter pStock = new SqlParameter("@stok", "yes");
-            SqlParameter pSubCategory = new SqlParameter("@altkategori", 15);
-            FinditDb db = new FinditDb();
-            var products = db.Database.SqlQuery<SearchWithFilter>("sp_SearchProductList @search, @stok, @altkategori", pSearch, pStock,pSubCategory).ToList();
+            SqlParameter pSearch = new SqlParameter("@search", search);
+            SqlParameter pStock = new SqlParameter("@stok", productStock);
+           SqlParameter pSubCategory = new SqlParameter("@altkategori", Convert.ToInt16(subCategory));
+            var products = Db.Database.SqlQuery<SearchWithFilter>("sp_SearchProductList @search, @stok, @altkategori", pSearch, pStock, pSubCategory).ToList();
             return View(products);
         }
     }

@@ -10,9 +10,11 @@
             </div>
             @using (Html.BeginForm("FilterPage", "Filter", FormMethod.Post))
             {
-                <div class="form-group ">
-                    <input type="text" class="form-control input-lg" id="inputlg" name="search" placeholder="Aradığınız ürünü buraya yazın" />
-                </div>
+            <div class="form-group ">
+                <input type="text" class="form-control input-lg" id="inputlg" name="search" placeholder="Aradığınız ürünü buraya yazın" />
+                <input type="hidden" name="subCategory" value="0" />
+                <input type="hidden" name="productStock" value="yes" />
+            </div>
                 <input type="submit" id="search" class="btn btn-success" name="searchBtn" value="Ara" style="width:200px;" />
             }
         </div>
