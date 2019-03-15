@@ -1,4 +1,4 @@
-﻿@model IEnumerable<FindIt.Models.SearchWithFilter>
+﻿@model Tuple<List<FindIt.Models.SearchWithFilter>, List<FindIt.Models.tbl_AltKategori>>
 @{
     Layout = null;
 }
@@ -50,11 +50,12 @@
                                             </div>
                                             <div id="collapse1" class="panel-collapse collapse">
                                                 <ul class="list-group">
-                                                    <li class="list-group-item">One</li>
-                                                    <li class="list-group-item">Two</li>
-                                                    <li class="list-group-item">Three</li>
+                                                    @foreach (var item in Model.Item2)
+                                                    {
+                                                       
+                                                    <li class="list-group-item"> <input type="radio" value="@item.AltKategori_ID" /> @item.AltKategori_Ad</li>
+                                                    }
                                                 </ul>
-                                                <div class="panel-footer">Footer</div>
                                             </div>
                                         </div>
                                     </div>
@@ -90,8 +91,9 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="row">
-                            @foreach (var item in Model)
+                            @foreach (var item in Model.Item1)
                             {
+
                                 <div class="col-sm-3" style="margin-top:2em;">
                                     <div class="card">
                                         <div class="card-body text-center">
