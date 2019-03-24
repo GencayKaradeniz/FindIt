@@ -4,11 +4,12 @@
     Layout = "~/Views/Shared/_LayoutPanel.cshtml";
 }
 
-
+<script src="~/Scripts/jquery-3.2.1.min.js"></script>
 <script>
     $(document).ready(function () {
         $("ul li").eq(1).addClass("active");
-    });</script>
+    });
+</script>
 <div class="col-md-6">
     <div class="card">
         <div class="header">
@@ -19,15 +20,18 @@
                 <div class="col-md-3">
                     <label>Kategori Adı</label>
                 </div>
-                <div class="col-md-5">
-                    <div class="form-group">
-                        <input type="text" class="form-control" id="categoryName" placeholder="Kategori Adı" value="" />
-                        <label id="error" Font-Bold="True" ForeColor="Red" Visible="False"></label>
+                @using (Html.BeginForm("CategoryOperations", "CategoryOperations", FormMethod.Post))
+                {
+                    <div class="col-md-5">
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="categoryName" name="categoryName" placeholder="Kategori Adı" value="" />
+                            <label id="error" Font-Bold="True" ForeColor="Red" Visible="False"></label>
+                        </div>
                     </div>
-                </div>
-                <div class="col-md-4">
-                    <button id="categoryAdd" Class="btn btn-success btn-fill pull-right">Ekle</button>
-                </div>
+                    <div class="col-md-4">
+                        <button type="submit" id="categoryAdd" Class="btn btn-success btn-fill pull-right">Ekle</button>
+                    </div>
+                }
             </div>
             <hr />
             <div class="row">
