@@ -12,10 +12,6 @@ namespace FindIt.Controllers
     {
         FinditDb db = new FinditDb();
         // GET: CategoryOperations
-        public ActionResult Index()
-        {
-            return View();
-        }
         [HttpGet]
         public ActionResult CategoryOperations()
         {
