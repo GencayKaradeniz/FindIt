@@ -64,16 +64,24 @@ namespace FindIt.Controllers
         {
             model.Categories = new List<SelectListItem>();
             model.SubCategories = new List<SelectListItem>();
+            model.Shelfs = new List<SelectListItem>();
 
             db.tbl_Kategori.OrderBy(s => s.Kategori_Ad).ToList().ForEach(s => model.Categories.Add(new SelectListItem
             {
                 Text = s.Kategori_Ad,
                 Value = s.Kategori_ID.ToString()
             }));
+
             db.tbl_AltKategori.OrderBy(s => s.AltKategori_Ad).Where(s => s.Kategori_id == model.CategoryID).ToList().ForEach(s => model.SubCategories.Add(new SelectListItem
             {
                 Text = s.AltKategori_Ad,
                 Value = s.AltKategori_ID.ToString()
+            }));
+
+            db.tbl_Raflar.OrderBy(s => s.Raf_Ad).Where(s => s.Raf_ID == model.ShelfID).ToList().ForEach(s => model.Shelfs.Add(new SelectListItem
+            {
+                Text = s.Raf_Ad,
+                Value = s.Raf_ID.ToString()
             }));
 
             HttpCookie cookie = Request.Cookies["UserInformation"];
@@ -93,10 +101,10 @@ namespace FindIt.Controllers
             SqlParameter pProductFeatures = new SqlParameter("@productEspecial", productFeatures);
             SqlParameter pProductShelf = new SqlParameter("@productShelf", Convert.ToInt16(model.ShelfID));
             db.Database.ExecuteSqlCommand("sp_ProductAdd @productName,@productCost,@productBarcode,@subcategoryId,@productStock,@personalId,@productEspecial,@productShelf",
-                                                                  pProductName, pProductCost, pProductBarcode, pSubCategoryList,
-                                                                  pProductStock, pPersonelId, pProductFeatures, pProductShelf);
+                                                                              pProductName, pProductCost, pProductBarcode, pSubCategoryList,
+                                                                              pProductStock, pPersonelId, pProductFeatures, pProductShelf);
 
-            return View();
+            return View(model);
         }
         public JsonResult SubCategoriesByCategoryID(string categoryID)
         {
