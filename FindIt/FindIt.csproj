@@ -160,6 +160,7 @@
     </Compile>
     <Compile Include="Models\FinditDb.cs" />
     <Compile Include="Models\ProductDetails.cs" />
+    <Compile Include="Models\ProductOperations.cs" />
     <Compile Include="Models\ProductOperationsLists.cs" />
     <Compile Include="Models\SearchWithFilter.cs" />
     <Compile Include="Models\tbl_AltKategori.cs" />

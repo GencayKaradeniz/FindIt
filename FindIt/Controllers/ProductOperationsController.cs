@@ -52,15 +52,19 @@ namespace FindIt.Controllers
                 SubCategories = subCategories,
                 Shelfs = shelfs
             };
-            return View(model);
+            var product = new tbl_Urun();
+            return View(Tuple.Create(model,product));
         }
 
         [HttpPost]
         public ActionResult ProductOperations(ProductOperationsLists model,
                                                          string productName, string productBarcode,
-                                                         string singlePicture,
+                                                         string singlePicture, string productFeatures,
                                                          string productCost, string productStock,
-                                                         string productFeatures)
+                                                         string btnSearch, string btnAdd,
+                                                         string btnDelete, string btnUpdate,
+                                                         string search
+                                                         )
         {
             model.Categories = new List<SelectListItem>();
             model.SubCategories = new List<SelectListItem>();
@@ -92,20 +96,60 @@ namespace FindIt.Controllers
                 personelId = 1;
             }
 
-            SqlParameter pProductName = new SqlParameter("@productName", productName);
-            SqlParameter pProductCost = new SqlParameter("@productCost", Convert.ToDecimal(productCost));
-            SqlParameter pProductBarcode = new SqlParameter("@productBarcode", productBarcode);
-            SqlParameter pSubCategoryList = new SqlParameter("@subcategoryId", Convert.ToInt16(model.SubCategoryID));
-            SqlParameter pProductStock = new SqlParameter("@productStock", productStock);
-            SqlParameter pPersonelId = new SqlParameter("@personalId", personelId);
-            SqlParameter pProductFeatures = new SqlParameter("@productEspecial", productFeatures);
-            SqlParameter pProductShelf = new SqlParameter("@productShelf", Convert.ToInt16(model.ShelfID));
-            db.Database.ExecuteSqlCommand("sp_ProductAdd @productName,@productCost,@productBarcode,@subcategoryId,@productStock,@personalId,@productEspecial,@productShelf",
-                                                                              pProductName, pProductCost, pProductBarcode, pSubCategoryList,
-                                                                              pProductStock, pPersonelId, pProductFeatures, pProductShelf);
-
-            return View(model);
+            if (btnAdd != null)
+            {
+                SqlParameter pProductName = new SqlParameter("@productName", productName);
+                SqlParameter pProductCost = new SqlParameter("@productCost", Convert.ToDecimal(productCost));
+                SqlParameter pProductBarcode = new SqlParameter("@productBarcode", productBarcode);
+                SqlParameter pSubCategoryList = new SqlParameter("@subcategoryId", Convert.ToInt16(model.SubCategoryID));
+                SqlParameter pProductStock = new SqlParameter("@productStock", productStock);
+                SqlParameter pPersonelId = new SqlParameter("@personalId", personelId);
+                SqlParameter pProductFeatures = new SqlParameter("@productEspecial", productFeatures);
+                SqlParameter pProductShelf = new SqlParameter("@productShelf", Convert.ToInt16(model.ShelfID));
+                SqlParameter pProductImage = new SqlParameter("@productImage", singlePicture);
+                db.Database.ExecuteSqlCommand("sp_ProductAdd @productName,@productCost,@productBarcode,@subcategoryId,@productStock,@personalId,@productEspecial,@productShelf,@productImage",
+                                                                                  pProductName, pProductCost, pProductBarcode, pSubCategoryList,
+                                                                                  pProductStock, pPersonelId, pProductFeatures, pProductShelf, pProductImage);
+                var product = new tbl_Urun();
+                return View(Tuple.Create(model,product));
+            }
+            else if (btnSearch != null)
+            {
+                SqlParameter pBarcode = new SqlParameter("@barcode", search);
+                var product = db.Database.SqlQuery<tbl_Urun>("Select * From tbl_Urun Where Urun_Barkod = @barcode", pBarcode).ToList();
+                return View(Tuple.Create(model,product));
+            }
+            else if (btnDelete != null)
+            {
+                SqlParameter pBarcode = new SqlParameter("@barcode", search);
+                db.Database.ExecuteSqlCommand("Delete From tbl_Urun Where Urun_Barkod = @barcode", pBarcode);
+                return View();
+            }
+            else
+            {
+                SqlParameter pProductName = new SqlParameter("@productName", productName);
+                SqlParameter pProductCost = new SqlParameter("@productCost", Convert.ToDecimal(productCost));
+                SqlParameter pProductBarcode = new SqlParameter("@productBarcode", productBarcode);
+                SqlParameter pSubCategoryList = new SqlParameter("@productSubCategory", Convert.ToInt16(model.SubCategoryID));
+                SqlParameter pProductStock = new SqlParameter("@productStock", productStock);
+                SqlParameter pPersonelId = new SqlParameter("@personalId", personelId);
+                SqlParameter pProductFeatures = new SqlParameter("@productFeatures", productFeatures);
+                SqlParameter pProductShelf = new SqlParameter("@productShelf", Convert.ToInt16(model.ShelfID));
+                SqlParameter pProductImage = new SqlParameter("@productImage", singlePicture);
+                db.Database.ExecuteSqlCommand("sp_ProductUpdate @productName,@productCost,@productBarcode,@subcategoryId,@productStock,@personalId,@productFeatures,@productShelf,@productImage",
+                                                                                  pProductName, pProductCost, pProductBarcode, pSubCategoryList,
+                                                                                  pProductStock, pPersonelId, pProductFeatures, pProductShelf, pProductImage);
+                return View();
+            }
         }
+
+        //[HttpGet]
+        //public ActionResult ProductSearch(string barcode)
+        //{
+        //    SqlParameter pBarcode = new SqlParameter("@barcode", barcode);
+        //    var product = db.Database.SqlQuery<tbl_Urun>("Select * From tbl_Urun Where Urun_Barkod = @barcode", pBarcode).ToList();
+        //    return View();
+        //}
         public JsonResult SubCategoriesByCategoryID(string categoryID)
         {
             int kategori = Convert.ToInt16(categoryID);
@@ -118,32 +162,6 @@ namespace FindIt.Controllers
             return Json(subCategories, JsonRequestBehavior.AllowGet);
         }
 
-        //public ActionResult ProductOperations(string productName, string productBarcode,
-        //                                                             string subCategories, string singlePicture,
-        //                                                             string productCost, string productStock,
-        //                                                             string productFeatures, string shelfList)
-        //{
-        //    HttpCookie cookie = Request.Cookies["UserInformation"];
-        //    int personelId = 1;
-        //    if (cookie != null)
-        //    {
-        //        personelId = Convert.ToInt16(cookie["PersonelId"]);
-        //        personelId = 1;
-        //    }
 
-        //    SqlParameter pProductName = new SqlParameter("@productName", productName);
-        //    SqlParameter pProductCost = new SqlParameter("@productCost", Convert.ToDecimal(productCost));
-        //    SqlParameter pProductBarcode = new SqlParameter("@productBarcode", productBarcode);
-        //    SqlParameter pSubCategoryList = new SqlParameter("@subcategoryId", Convert.ToInt16(subCategories));
-        //    SqlParameter pProductStock = new SqlParameter("@productStock", productStock);
-        //    SqlParameter pPersonelId = new SqlParameter("@personalId", personelId);
-        //    SqlParameter pProductFeatures = new SqlParameter("@productEspecial", productFeatures);
-        //    SqlParameter pProductShelf = new SqlParameter("@productShelf", Convert.ToInt16(shelfList));
-        //    db.Database.ExecuteSqlCommand("sp_ProductAdd @productName,@productCost,@productBarcode,@subcategoryId,@productStock,@personalId,@productEspecial,@productShelf",
-        //                                                          pProductName, pProductCost, pProductBarcode, pSubCategoryList,
-        //                                                          pProductStock, pPersonelId, pProductFeatures, pProductShelf);
-
-        //    return View();
-        //}
     }
 }

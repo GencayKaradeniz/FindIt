@@ -1,4 +1,4 @@
-﻿@model FindIt.Models.ProductOperationsLists
+﻿@model Tuple<List<FindIt.Models.ProductOperationsLists>, List<FindIt.Models.tbl_Urun>>
 @{
     ViewBag.Title = "Ürün İşlemleri";
     Layout = "~/Views/Shared/_LayoutPanel.cshtml";
@@ -30,6 +30,8 @@
 </script>
 @using (Html.BeginForm("ProductOperations", "ProductOperations", FormMethod.Post))
 {
+    for (int i = 0; i < Model.Item2.Count; i++)
+    {
         <div class="col-md-8">
             <div class="card">
                 <div class="header">
@@ -40,30 +42,36 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Ürün Ad</label>
-                                <input type="text" name="productName" class="form-control" placeholder="Ürün Adı" />
+                                @Html.TextBox("productName",  Model.Item2[i].Urun_Ad, new { @class = "form-control" });
+                                @*<input type="text" name="productName" value="" class="form-control" placeholder="Ürün Adı" />*@
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Ürün Barkod</label>
-                                <input type="text" name="productBarcode" class="form-control" placeholder="Ürün Barkodu" />
+                                @Html.TextBox("productBarcode", Model.Item2[i].Urun_Barkod, new { @class = "form-control" });
+                                @*<input type="text" name="productBarcode" value="@product.Urun_Barkod" class="form-control" placeholder="Ürün Barkodu" />*@
                             </div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label>Kategoriler</label>
-                                @Html.DropDownListFor(m => m.CategoryID, Model.Categories, new { @class = "form-control" })
-                                @*@Html.DropDownList("CategoryList", ViewBag.listCategories as SelectList, "Lütfen Seçiniz", new { @class = "form-control" })*@
-                                <label name="currentCategory" style="color:gray;font-weight:bold;">Şuanki kategorisi</label>
+                                <label>Kategoriler</label>                                
+                                @foreach (var item in Model.Item1)
+                                {
+                                    @Html.DropDownListFor(m => item.CategoryID, item.Categories, new { @class = "form-control" })
+                                }
+                                <label name="currentCategory" style="color:gray;font-weight:bold;">Şuanki kategorisi :</label>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Alt Kategoriler</label>
-                                @Html.DropDownListFor(m => m.SubCategoryID, Model.SubCategories, new { @class = "form-control" })
-                                @*@Html.DropDownList("SubCategoryList", ViewBag.listSubCategories as SelectList, "Lütfen Seçiniz", new { @class = "form-control" })*@
+                                @foreach (var item in Model.Item1)
+                                {
+                                    @Html.DropDownListFor(m => item.SubCategoryID, item.SubCategories, new { @class = "form-control" })
+                                }
                                 <label name="currentSubCategory" style="color:gray;font-weight:bold;">Şuanki alt kategorisi</label>
                             </div>
                         </div>
@@ -72,13 +80,15 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Ürün Fiyat</label>
-                                <input type="text" class="form-control" name="productCost" value="" />
+                                @Html.TextBox("productCost", Model.Item2[i].Urun_Fiyat, new { @class = "form-control" });
+                                @*<input type="text" class="form-control" value="@product.Urun_Fiyat" name="productCost" />*@
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Ürün Stok</label>
-                                <input type="number" class="form-control" name="productStock" />
+                                @Html.TextBox("productStock", Model.Item2[i].Urun_Stok, new { @class = "form-control" });
+                                @*<input type="number" class="form-control" value="@product.Urun_Stok" name="productStock" />*@
                             </div>
                         </div>
                     </div>
@@ -86,13 +96,17 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Ürün Özellikleri</label>
-                                <textarea name="productFeatures" class="form-control" placeholder="Ürün özelliklerini giriniz" style="resize:none;"></textarea>
+                                @Html.TextArea("productFeatures", Model.Item2[i].Urun_Ozellikleri, new { @class = "form-control" });
+                                @*<textarea name="productFeatures" class="form-control" placeholder="Ürün özelliklerini giriniz" style="resize:none;">@product.Urun_Ozellikleri</textarea>*@
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Raf</label>
-                                @Html.DropDownListFor(m => m.ShelfID, Model.Shelfs, new { @class = "form-control" })
+                                @foreach (var item in Model.Item1)
+                                {
+                                    @Html.DropDownListFor(m => item.ShelfID, item.Shelfs, new { @class = "form-control" })
+                                }
                             </div>
                         </div>
                     </div>
@@ -109,37 +123,35 @@
                 </div>
             </div>
         </div>
-
-        <div class="col-md-4">
-            <div class="card">
-                <div class="header">
-                    <h4>İşlem</h4>
-                </div>
-                <div class="content">
-                    <div class="row">
-                        <div class="col-md-10 col-md-offset-1">
-                            <div class="col-sm-10">
-                                <div class="form-group">
-                                    <label>Barkod ile arama</label>
-                                    <input type="text" class="form-control" name="search" placeholder="Barkod giriniz." />
-                                    <label style="color:red;font-weight:bold;visibility:visible;"></label>
-                                    <asp:Label ID="Label_SearchNotFound" runat="server" ForeColor="Red" Font-Bold="True" Visible="False"></asp:Label>
-                                </div>
+    }
+    <div class="col-md-4">
+        <div class="card">
+            <div class="header">
+                <h4>İşlem</h4>
+            </div>
+            <div class="content">
+                <div class="row">
+                    <div class="col-md-10 col-md-offset-1">
+                        <div class="col-sm-10">
+                            <div class="form-group">
+                                <label>Barkod ile arama</label>
+                                <input type="text" class="form-control" name="search" placeholder="Barkod giriniz." />
+                                <label style="color:red;font-weight:bold;visibility:visible;"></label>
                             </div>
-                            <div class="col-sm-2">
-                                <label></label>
-                                <button class="btn btn-fill btn-info">Ara</button>
-                            </div>
-                            <div class="col-md-4">
-                                @*<input type="submitid" id="btnProductAdd" class="btn btn-fill btn-success" style="width:100px;margin-bottom:10px;" value="Ekle" />*@
-                                <button type="submit" class="btn btn-fill btn-success" style="width:100px;margin-bottom:10px;">Ekle</button>
-                                <button class="btn btn-fill btn-danger" style="width:100px;margin-bottom:10px;">Sil</button>
-                                <button class="btn btn-fill btn-primary" style="width:100px;margin-bottom:10px;">Güncelle</button>
-                            </div>
-                            <div class="col-md-8"></div>
                         </div>
+                        <div class="col-sm-2">
+                            <label></label>
+                            <button type="submit" class="btn btn-fill btn-info" name="btnSearch">Ara</button>
+                        </div>
+                        <div class="col-md-4">
+                            <button type="submit" class="btn btn-fill btn-success" name="btnAdd" style="width:100px;margin-bottom:10px;">Ekle</button>
+                            <button type="submit" class="btn btn-fill btn-danger" name="btnDelete" style="width:100px;margin-bottom:10px;">Sil</button>
+                            <button type="submit" class="btn btn-fill btn-primary" name="btnUpdate" style="width:100px;margin-bottom:10px;">Güncelle</button>
+                        </div>
+                        <div class="col-md-8"></div>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
 }
