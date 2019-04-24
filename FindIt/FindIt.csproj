@@ -153,6 +153,7 @@
     <Compile Include="Controllers\CategoryOperationsController.cs" />
     <Compile Include="Controllers\FilterController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\MapController.cs" />
     <Compile Include="Controllers\ProductDetailsController.cs" />
     <Compile Include="Controllers\ProductOperationsController.cs" />
     <Compile Include="Global.asax.cs">
@@ -287,6 +288,7 @@
     <Content Include="Views\ProductOperations\ProductOperations.cshtml" />
     <Content Include="Views\CategoryOperations\CategoryOperations.cshtml" />
     <Content Include="Views\Filter\FilterPage.cshtml" />
+    <Content Include="Views\Map\MapDetails.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
