@@ -2,8 +2,62 @@
 @{
     ViewBag.Title = "MapDetails";
     Layout = "~/Views/Shared/_LayoutPanel.cshtml";
-}
+}<style>
+    table {
+        border-collapse: collapse;
+        border: 1px solid #7f7f7f;
+    }
 
+    td {
+        border: 1px solid #7f7f7f;
+        width: 50px;
+        height: 50px;
+        text-align: center;
+    }
+</style>
+ <script type="text/javascript">
+     var ctx = null;
+     var gameMap = [
+         1, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+         0, 1, 1, 1, 0, 1, 1, 1, 1, 0,
+         0, 1, 0, 0, 0, 1, 0, 0, 0, 0,
+         0, 1, 1, 1, 1, 1, 1, 1, 1, 0,
+         0, 1, 0, 1, 0, 0, 0, 1, 1, 0,
+         0, 1, 0, 1, 0, 1, 0, 0, 1, 0,
+         0, 1, 1, 1, 1, 1, 1, 1, 1, 0,
+         0, 1, 0, 0, 0, 0, 0, 1, 1, 0,
+         0, 1, 1, 1, 0, 1, 1, 1, 1, 0,
+         0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+     ];
+     var tileW = 50, tileH = 50;
+     var mapW = 10, mapH = 10;
+     var currentSecond = 0, frameCount = 0, framesLastSecond = 0;
+
+     window.onload = function () {
+         ctx = document.getElementById('game').getContext("2d");
+         requestAnimationFrame(drawGame);
+         ctx.font = "bold 10pt sans-serif";
+     };
+
+     function drawGame() {
+         if (ctx == null) { return; }
+         
+         for (var y = 0; y < mapH; ++y) {
+             for (var x = 0; x < mapW; ++x) {
+                 switch (gameMap[((y * mapW) + x)]) {
+                     case 0:
+                         ctx.fillStyle = "#685b48";
+                         break;
+                     default:
+                         ctx.fillStyle = "#5aa457";
+                 }
+
+                 ctx.fillRect(x * tileW, y * tileH, tileW, tileH);
+             }
+         }
+         requestAnimationFrame(drawGame);
+     }
+ </script>
 <input id="harita" type="hidden" name="html" />
 <input type="hidden" name="operation" value="save" />
 <div class="row">
@@ -13,106 +67,109 @@
                 <div class="header">
                     <h4 class="title">Harita Oluştur</h4>
                 </div>
-                <div class="content">
-                    <div class="row" style="margin-top: 10px;margin-left:0px !important;">
-                        <div class="col-md-3">
-                            <label>Mağaza Eni</label>
+                @using (Html.BeginForm("MapDetails", "Map", FormMethod.Post))
+                {
+                    <div class="content">
+                        <div class="row" style="margin-top: 10px;margin-left:0px !important;">
+                            <div class="col-md-3">
+                                <label>Mağaza Eni</label>
+                            </div>
+                            <div class="col-md-1">
+                                <label>:</label>
+                            </div>
+                            <div class="col-md-8">
+                                <div class="form-group-sm">
+                                    <input id="shopWidth" class="form-control" name="shopWidth" type="number" placeholder="Mağaza Enini Giriniz (m)" />
+                                </div>
+                            </div>
                         </div>
-                        <div class="col-md-1">
-                            <label>:</label>
+                        <div class="row" style="margin-top: 10px;margin-left:0px !important;">
+                            <div class="col-md-3">
+                                <label>Mağaza Boyu</label>
+                            </div>
+                            <div class="col-md-1">
+                                <label>:</label>
+                            </div>
+                            <div class="col-md-8">
+                                <div class="form-group-sm">
+                                    <input id="shopHeight" class="form-control" name="shopHeight" type="number" placeholder="Mağaza Boyunu Giriniz (m)" />
+                                </div>
+                            </div>
                         </div>
-                        <div class="col-md-8">
-                            <div class="form-group-sm">
-                                <input class="form-control" name="shopWidth" type="number" placeholder="Mağaza Enini Giriniz (m)" />
+                        <div class="row" style="margin-top: 10px;margin-left:0px !important;">
+                            <div class="col-md-3">
+                                <label>Raf Eni</label>
+                            </div>
+                            <div class="col-md-1">
+                                <label>:</label>
+                            </div>
+                            <div class="col-md-8">
+                                <div class="form-group-sm">
+                                    <input class="form-control" name="shelfWidth" type="number" placeholder="Raf Enini Giriniz (cm)" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" style="margin-top: 10px;margin-left:0px !important;">
+                            <div class="col-md-3">
+                                <label>Raf Yüksekliği</label>
+                            </div>
+                            <div class="col-md-1">
+                                <label>:</label>
+                            </div>
+                            <div class="col-md-8">
+                                <div class="form-group-sm">
+                                    <input class="form-control" name="shelfHeight" type="number" placeholder="Raf Yüksekliğini Giriniz (cm)" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" style="margin-top: 10px;margin-left:0px !important;">
+                            <div class="col-md-3">
+                                <label>Raf Boyu</label>
+                            </div>
+                            <div class="col-md-1">
+                                <label>:</label>
+                            </div>
+                            <div class="col-md-8">
+                                <div class="form-group-sm">
+                                    <input class="form-control" name="shelfLength" type="number" placeholder="Raf Boyunu Giriniz (cm)" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" style="margin-top: 10px;margin-left:0px !important;">
+                            <div class="col-md-3">
+                                <label>Raf Sayısı</label>
+                            </div>
+                            <div class="col-md-1">
+                                <label>:</label>
+                            </div>
+                            <div class="col-md-8">
+                                <div class="form-group-sm">
+                                    <input class="form-control" name="shelfCount" type="number" placeholder="Raf Sayısını Giriniz" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" style="margin-top: 10px;margin-left:0px !important;">
+                            <div class="col-md-3">
+                                <label>Raf Kat Sayısı</label>
+                            </div>
+                            <div class="col-md-1">
+                                <label>:</label>
+                            </div>
+                            <div class="col-md-8">
+                                <div class="form-group-sm">
+                                    <input class="form-control" name="shelf" type="number" placeholder="Raf Katını Giriniz" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" style="margin-top: 10px; margin-left:0px !important">
+                            <div class="col-md-9"></div>
+                            <div class="col-md-3">
+                                <input  id="btnAddShelf" class="btn btn-success btn-fill" style="width:100px;" value="Ekle" onclick="drawTable()" />
+                                @*<asp:Button ID="btnAddShelf" CssClass="btn btn-success btn-fill" runat="server" Text="Ekle" OnClick="btnAddShelf_Click" />*@
                             </div>
                         </div>
                     </div>
-                    <div class="row" style="margin-top: 10px;margin-left:0px !important;">
-                        <div class="col-md-3">
-                            <label>Mağaza Boyu</label>
-                        </div>
-                        <div class="col-md-1">
-                            <label>:</label>
-                        </div>
-                        <div class="col-md-8">
-                            <div class="form-group-sm">
-                                <input class="form-control" name="shopHeight" type="number" placeholder="Mağaza Boyunu Giriniz (m)" />
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row" style="margin-top: 10px;margin-left:0px !important;">
-                        <div class="col-md-3">
-                            <label>Raf Eni</label>
-                        </div>
-                        <div class="col-md-1">
-                            <label>:</label>
-                        </div>
-                        <div class="col-md-8">
-                            <div class="form-group-sm">
-                                <input class="form-control" name="shelfWidth" type="number" placeholder="Raf Enini Giriniz (cm)" />
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row" style="margin-top: 10px;margin-left:0px !important;">
-                        <div class="col-md-3">
-                            <label>Raf Yüksekliği</label>
-                        </div>
-                        <div class="col-md-1">
-                            <label>:</label>
-                        </div>
-                        <div class="col-md-8">
-                            <div class="form-group-sm">
-                                <input class="form-control" name="shelfHeight" type="number" placeholder="Raf Yüksekliğini Giriniz (cm)" />
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row" style="margin-top: 10px;margin-left:0px !important;">
-                        <div class="col-md-3">
-                            <label>Raf Boyu</label>
-                        </div>
-                        <div class="col-md-1">
-                            <label>:</label>
-                        </div>
-                        <div class="col-md-8">
-                            <div class="form-group-sm">
-                                <input class="form-control" name="shelfLength" type="number" placeholder="Raf Boyunu Giriniz (cm)" />
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row" style="margin-top: 10px;margin-left:0px !important;">
-                        <div class="col-md-3">
-                            <label>Raf Sayısı</label>
-                        </div>
-                        <div class="col-md-1">
-                            <label>:</label>
-                        </div>
-                        <div class="col-md-8">
-                            <div class="form-group-sm">
-                                <input class="form-control" name="shelfCount" type="number" placeholder="Raf Sayısını Giriniz" />
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row" style="margin-top: 10px;margin-left:0px !important;">
-                        <div class="col-md-3">
-                            <label>Raf Kat Sayısı</label>
-                        </div>
-                        <div class="col-md-1">
-                            <label>:</label>
-                        </div>
-                        <div class="col-md-8">
-                            <div class="form-group-sm">
-                                <input class="form-control" name="shelf" type="number" placeholder="Raf Katını Giriniz" />
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row" style="margin-top: 10px; margin-left:0px !important">
-                        <div class="col-md-9"></div>
-                        <div class="col-md-3">
-                            <input id="btnAddShelf" class="btn btn-success btn-fill" style="width:100px;" value="Ekle" />
-                            @*<asp:Button ID="btnAddShelf" CssClass="btn btn-success btn-fill" runat="server" Text="Ekle" OnClick="btnAddShelf_Click" />*@
-                        </div>
-                    </div>
-                </div>
+                }
             </div>
         </div>
         <div class="row" style="margin-left:0px !important;">
@@ -130,8 +187,7 @@
                         <th>Ekle</th>
                         <th>Sil</th>
                         </thead>
-                        <tbody>
-                        </tbody>
+                        <tbody></tbody>
                     </table>
                 </div>
             </div>
@@ -143,7 +199,9 @@
                 <h4 class="title">Mağaza Haritası</h4>
             </div>
             <div class="content">
-                <div id="shelfsArea" class="container" style="background-color: #bdbdbd; width: 100%; height: 400px;"></div>
+                <div id="shelfsArea" class="container" style="background-color: #bdbdbd; width: 100%; height: 400px;">
+                    <canvas id="game" width="400" height="400"></canvas>
+                </div>
                 <button id="submitButton" type="submit" class="btn btn-success btn-fill" style="float: right; margin-top: 10px;" onclick="getHtml()">Ekle</button>
             </div>
         </div>
