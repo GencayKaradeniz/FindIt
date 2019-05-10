@@ -153,6 +153,7 @@
     <Compile Include="Controllers\CategoryOperationsController.cs" />
     <Compile Include="Controllers\FilterController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\MapController.cs" />
     <Compile Include="Controllers\ProductDetailsController.cs" />
     <Compile Include="Controllers\ProductOperationsController.cs" />
     <Compile Include="Global.asax.cs">
@@ -161,12 +162,14 @@
     <Compile Include="Models\FinditDb.cs" />
     <Compile Include="Models\ProductDetails.cs" />
     <Compile Include="Models\ProductOperationsLists.cs" />
+    <Compile Include="Models\Raflar.cs" />
     <Compile Include="Models\SearchWithFilter.cs" />
     <Compile Include="Models\tbl_AltKategori.cs" />
     <Compile Include="Models\tbl_Harita.cs" />
     <Compile Include="Models\tbl_Kategori.cs" />
     <Compile Include="Models\tbl_Personel.cs" />
     <Compile Include="Models\tbl_PersonelStatu.cs" />
+    <Compile Include="Models\tbl_RafKatlar.cs" />
     <Compile Include="Models\tbl_Raflar.cs" />
     <Compile Include="Models\tbl_Urun.cs" />
     <Compile Include="Models\tbl_UrunResim.cs" />
@@ -266,6 +269,7 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\leader-line.js" />
     <Content Include="Scripts\leader-line.min.js.js" />
+    <Content Include="Scripts\MapCreater.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
@@ -287,6 +291,8 @@
     <Content Include="Views\ProductOperations\ProductOperations.cshtml" />
     <Content Include="Views\CategoryOperations\CategoryOperations.cshtml" />
     <Content Include="Views\Filter\FilterPage.cshtml" />
+    <Content Include="Views\Map\MapDetails.cshtml" />
+    <Content Include="Views\Map\CategoriesForMap.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

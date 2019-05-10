@@ -6,15 +6,15 @@ namespace FindIt.Models
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    public partial class tbl_Harita
+    public partial class tbl_UrunResim
     {
         [Key]
-        public int Harita_ID { get; set; }
+        public int UrunResim_ID { get; set; }
 
-        public int Harita_En { get; set; }
+        [Column(TypeName = "text")]
+        [Required]
+        public string UrunResim_Yol { get; set; }
 
-        public int Harita_Boy { get; set; }
-
-        public int Harita_Raf_Uzunluk { get; set; }
+        public int Urun_id { get; set; }
     }
 }

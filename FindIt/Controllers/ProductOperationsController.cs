@@ -12,11 +12,7 @@ namespace FindIt.Controllers
     public class ProductOperationsController : Controller
     {
         FinditDb db = new FinditDb();
-        // GET: ProductOperations
-        //public ActionResult Index()
-        //{
-        //    return View();
-        //}
+        // GET: ProductOperations 
 
         [HttpGet]
         public ActionResult ProductOperations()

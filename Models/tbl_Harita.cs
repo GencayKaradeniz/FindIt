@@ -16,5 +16,6 @@ namespace FindIt.Models
         public int Harita_Boy { get; set; }
 
         public int Harita_Raf_Uzunluk { get; set; }
+
     }
 }

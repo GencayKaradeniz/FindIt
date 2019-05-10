@@ -11,7 +11,6 @@ namespace FindIt.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public tbl_Raflar()
         {
-            tbl_RafKatlar = new HashSet<tbl_RafKatlar>();
             tbl_Urun = new HashSet<tbl_Urun>();
         }
 
@@ -24,20 +23,18 @@ namespace FindIt.Models
 
         public int Kategori_id { get; set; }
 
+        [Required]
         public int RafBasX { get; set; }
-
+        [Required]
         public int RafBitX { get; set; }
-
+        [Required]
         public int RafBasY { get; set; }
-
+        [Required]
         public int RafBitY { get; set; }
-
+        [Required]
         public int RafKat { get; set; }
 
         public virtual tbl_Kategori tbl_Kategori { get; set; }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<tbl_RafKatlar> tbl_RafKatlar { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<tbl_Urun> tbl_Urun { get; set; }

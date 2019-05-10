@@ -1,0 +1,161 @@
+﻿@model List<FindIt.Models.Raflar>
+@{
+    ViewBag.Title = "Harita İşlemleri";
+    Layout = "~/Views/Shared/_LayoutPanel.cshtml";
+}
+<script>
+    $(document).ready(function () {
+        $("ul li").eq(2).addClass("active");
+
+        $('body').on("click","#modal",function () {
+            var rafid = $(this).data("target");
+            //bu urlimizi post et
+            $.post('@Url.Action("CategoriesForMap","Map")',
+                {
+                    rafID: rafid
+                },
+                function (data) {
+                    $('#modelView .modal-body').html(data);
+                    $('#modelView').modal('show');
+              });
+        });
+    });
+</script>
+<script src="~/Scripts/MapCreater.js"></script>
+<input id="harita" type="hidden" name="html" />
+<input type="hidden" name="operation" value="save" />
+@using (Html.BeginForm("ShelfRowSave", "Map", FormMethod.Post))
+{
+    <div class="modal fade" id="modelView" role="dialog" tabindex="-1" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h5 class="modal-title" id="exampleModalLabel">Raf Adı</h5>
+                </div>
+                <div class="modal-body">
+                    <!-- Modal Body Filling at PartialView -->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Kapat</button>
+                    <button type="button" class="btn btn-primary">Kaydet</button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+<div class="row">
+    @using (Html.BeginForm("MapDetails", "Map", FormMethod.Post))
+    {
+        <div class="col-md-12">
+            <div class="col-md-6">
+                <div class="row">
+                    <div class="card">
+                        <div class="header">
+                            <h4 class="title">Harita Oluştur</h4>
+                        </div>
+
+                        <div class="content">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <label>Mağaza Eni</label>
+                                </div>
+                                <div class="col-md-1">
+                                    <label>:</label>
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="form-group">
+                                        <input id="shopWidth" class="form-control" name="shopWidth" type="number" placeholder="Mağaza Enini Giriniz (m)" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <label>Mağaza Boyu</label>
+                                </div>
+                                <div class="col-md-1">
+                                    <label>:</label>
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="form-group">
+                                        <input id="shopHeight" class="form-control" name="shopHeight" type="number" placeholder="Mağaza Boyunu Giriniz (m)" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <label>Raf Uzunluğu</label>
+                                </div>
+                                <div class="col-md-1">
+                                    <label>:</label>
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="form-group">
+                                        <input id="shelfLength" class="form-control" name="shelfLength" type="number" placeholder="Raf Uzunluğunu Giriniz (cm)" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-9"></div>
+                                <div class="col-md-3">
+                                    <input id="btnAddShelf" class="btn btn-success btn-fill" style="width:100px;" value="Ekle" onclick="drawShopMap()" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="row" style="margin-left:0px !important;">
+                    <div class="card">
+                        <div class="header">
+                            <h4 class="title">Kullanılabilir Raflar</h4>
+                        </div>
+                        <div class="content">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Raf Adı</th>
+                                        <th>Kategori</th>
+                                        <th>Raf Kat Ayarları</th>
+                                    </tr>
+
+                                    @foreach (var item in Model)
+                                    {
+                                        <tr>
+                                            <td> @item.RafAdi</td>
+                                            <td> @item.KategoriAdi</td>
+                                            <td>
+                                                <a id="modal" href="#" class="btn btn-success btn-fill" data-target="@item.RafID" data-toggle="modal">Ayarlar</a>
+                                        </tr>
+                                    }
+                                </thead>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-12">
+            <div class="card">
+                <div class="header">
+                    <h4 class="title">Mağaza Haritası</h4>
+                </div>
+                <div class="content ">
+                    <div class="row" style="padding: 0 20px; width:100%;">
+                        <div id="shelfsArea" class="text-center">
+                            <canvas id="game" width="800" height="800"></canvas>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <button id="addMapButton" class="btn btn-success btn-fill" style="float: right; margin-top: 10px;margin-right:20px;">Kaydet</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
