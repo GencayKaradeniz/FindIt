@@ -11,11 +11,13 @@ namespace FindIt.Models
         [Key]
         public int Urun_ID { get; set; }
 
+        [Column(TypeName = "text")]
         [Required]
         public string Urun_Ad { get; set; }
 
         public decimal Urun_Fiyat { get; set; }
 
+        [Column(TypeName = "text")]
         [Required]
         public string Urun_Barkod { get; set; }
 
@@ -25,6 +27,7 @@ namespace FindIt.Models
 
         public int Personel_id { get; set; }
 
+        [Column(TypeName = "text")]
         public string Urun_Ozellikleri { get; set; }
 
         public int? Raf_id { get; set; }

@@ -1,0 +1,25 @@
+﻿@model List<FindIt.Models.Raflar>
+@{
+    ViewBag.Title = "CategoriesForMap";
+}
+<div class="row">
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th class= "text-center">Raf Katı</th>
+                <th class= "text-center">Raf Alt Kategorisi</th>
+            </tr>
+        </thead>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td class="text-center">@item.BulunanKatNo</td>
+                <td class="text-center">
+                    <div class="col-md-6" style="margin-left:12em;">
+                        @Html.DropDownListFor(m => item.AltKategoriID, item.SubCategories, new { @class = "form-control " })
+                    </div>
+                </td>
+            </tr>
+        }
+    </table>
+</div>

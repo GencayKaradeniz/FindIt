@@ -6,27 +6,36 @@ namespace FindIt.Models
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    public partial class tbl_AltKategori
+    public partial class tbl_Personel
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public tbl_AltKategori()
+        public tbl_Personel()
         {
-            tbl_RafKatlar = new HashSet<tbl_RafKatlar>();
             tbl_Urun = new HashSet<tbl_Urun>();
         }
 
         [Key]
-        public int AltKategori_ID { get; set; }
+        public int Personel_ID { get; set; }
 
         [Required]
-        public string AltKategori_Ad { get; set; }
+        [StringLength(50)]
+        public string Personel_Ad { get; set; }
 
-        public int Kategori_id { get; set; }
+        [Required]
+        [StringLength(50)]
+        public string Personel_Soyad { get; set; }
 
-        public virtual tbl_Kategori tbl_Kategori { get; set; }
+        [Required]
+        [StringLength(11)]
+        public string Personel_TC { get; set; }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<tbl_RafKatlar> tbl_RafKatlar { get; set; }
+        [Required]
+        [StringLength(16)]
+        public string Personel_Parola { get; set; }
+
+        public int Statu_id { get; set; }
+
+        public virtual tbl_PersonelStatu tbl_PersonelStatu { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<tbl_Urun> tbl_Urun { get; set; }

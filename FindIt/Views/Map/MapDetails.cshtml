@@ -1,210 +1,161 @@
-﻿@model FindIt.Models.ProductOperationsLists
+﻿@model List<FindIt.Models.Raflar>
 @{
-    ViewBag.Title = "MapDetails";
+    ViewBag.Title = "Harita İşlemleri";
     Layout = "~/Views/Shared/_LayoutPanel.cshtml";
-}<style>
-    table {
-        border-collapse: collapse;
-        border: 1px solid #7f7f7f;
-    }
+}
+<script>
+    $(document).ready(function () {
+        $("ul li").eq(2).addClass("active");
 
-    td {
-        border: 1px solid #7f7f7f;
-        width: 50px;
-        height: 50px;
-        text-align: center;
-    }
-</style>
- <script type="text/javascript">
-     var ctx = null;
-     var gameMap = [
-         1, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-         0, 1, 1, 1, 0, 1, 1, 1, 1, 0,
-         0, 1, 0, 0, 0, 1, 0, 0, 0, 0,
-         0, 1, 1, 1, 1, 1, 1, 1, 1, 0,
-         0, 1, 0, 1, 0, 0, 0, 1, 1, 0,
-         0, 1, 0, 1, 0, 1, 0, 0, 1, 0,
-         0, 1, 1, 1, 1, 1, 1, 1, 1, 0,
-         0, 1, 0, 0, 0, 0, 0, 1, 1, 0,
-         0, 1, 1, 1, 0, 1, 1, 1, 1, 0,
-         0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-     ];
-     var tileW = 50, tileH = 50;
-     var mapW = 10, mapH = 10;
-     var currentSecond = 0, frameCount = 0, framesLastSecond = 0;
-
-     window.onload = function () {
-         ctx = document.getElementById('game').getContext("2d");
-         requestAnimationFrame(drawGame);
-         ctx.font = "bold 10pt sans-serif";
-     };
-
-     function drawGame() {
-         if (ctx == null) { return; }
-         
-         for (var y = 0; y < mapH; ++y) {
-             for (var x = 0; x < mapW; ++x) {
-                 switch (gameMap[((y * mapW) + x)]) {
-                     case 0:
-                         ctx.fillStyle = "#685b48";
-                         break;
-                     default:
-                         ctx.fillStyle = "#5aa457";
-                 }
-
-                 ctx.fillRect(x * tileW, y * tileH, tileW, tileH);
-             }
-         }
-         requestAnimationFrame(drawGame);
-     }
- </script>
+        $('body').on("click","#modal",function () {
+            var rafid = $(this).data("target");
+            //bu urlimizi post et
+            $.post('@Url.Action("CategoriesForMap","Map")',
+                {
+                    rafID: rafid
+                },
+                function (data) {
+                    $('#modelView .modal-body').html(data);
+                    $('#modelView').modal('show');
+              });
+        });
+    });
+</script>
+<script src="~/Scripts/MapCreater.js"></script>
 <input id="harita" type="hidden" name="html" />
 <input type="hidden" name="operation" value="save" />
-<div class="row">
-    <div class="col-md-6">
-        <div class="row" style="margin-left:0px !important;">
-            <div class="card">
-                <div class="header">
-                    <h4 class="title">Harita Oluştur</h4>
+@using (Html.BeginForm("ShelfRowSave", "Map", FormMethod.Post))
+{
+    <div class="modal fade" id="modelView" role="dialog" tabindex="-1" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h5 class="modal-title" id="exampleModalLabel">Raf Adı</h5>
                 </div>
-                @using (Html.BeginForm("MapDetails", "Map", FormMethod.Post))
-                {
-                    <div class="content">
-                        <div class="row" style="margin-top: 10px;margin-left:0px !important;">
-                            <div class="col-md-3">
-                                <label>Mağaza Eni</label>
-                            </div>
-                            <div class="col-md-1">
-                                <label>:</label>
-                            </div>
-                            <div class="col-md-8">
-                                <div class="form-group-sm">
-                                    <input id="shopWidth" class="form-control" name="shopWidth" type="number" placeholder="Mağaza Enini Giriniz (m)" />
+                <div class="modal-body">
+                    <!-- Modal Body Filling at PartialView -->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Kapat</button>
+                    <button type="button" class="btn btn-primary">Kaydet</button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+<div class="row">
+    @using (Html.BeginForm("MapDetails", "Map", FormMethod.Post))
+    {
+        <div class="col-md-12">
+            <div class="col-md-6">
+                <div class="row">
+                    <div class="card">
+                        <div class="header">
+                            <h4 class="title">Harita Oluştur</h4>
+                        </div>
+
+                        <div class="content">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <label>Mağaza Eni</label>
+                                </div>
+                                <div class="col-md-1">
+                                    <label>:</label>
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="form-group">
+                                        <input id="shopWidth" class="form-control" name="shopWidth" type="number" placeholder="Mağaza Enini Giriniz (m)" />
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="row" style="margin-top: 10px;margin-left:0px !important;">
-                            <div class="col-md-3">
-                                <label>Mağaza Boyu</label>
-                            </div>
-                            <div class="col-md-1">
-                                <label>:</label>
-                            </div>
-                            <div class="col-md-8">
-                                <div class="form-group-sm">
-                                    <input id="shopHeight" class="form-control" name="shopHeight" type="number" placeholder="Mağaza Boyunu Giriniz (m)" />
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <label>Mağaza Boyu</label>
+                                </div>
+                                <div class="col-md-1">
+                                    <label>:</label>
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="form-group">
+                                        <input id="shopHeight" class="form-control" name="shopHeight" type="number" placeholder="Mağaza Boyunu Giriniz (m)" />
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="row" style="margin-top: 10px;margin-left:0px !important;">
-                            <div class="col-md-3">
-                                <label>Raf Eni</label>
-                            </div>
-                            <div class="col-md-1">
-                                <label>:</label>
-                            </div>
-                            <div class="col-md-8">
-                                <div class="form-group-sm">
-                                    <input class="form-control" name="shelfWidth" type="number" placeholder="Raf Enini Giriniz (cm)" />
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <label>Raf Uzunluğu</label>
+                                </div>
+                                <div class="col-md-1">
+                                    <label>:</label>
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="form-group">
+                                        <input id="shelfLength" class="form-control" name="shelfLength" type="number" placeholder="Raf Uzunluğunu Giriniz (cm)" />
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="row" style="margin-top: 10px;margin-left:0px !important;">
-                            <div class="col-md-3">
-                                <label>Raf Yüksekliği</label>
-                            </div>
-                            <div class="col-md-1">
-                                <label>:</label>
-                            </div>
-                            <div class="col-md-8">
-                                <div class="form-group-sm">
-                                    <input class="form-control" name="shelfHeight" type="number" placeholder="Raf Yüksekliğini Giriniz (cm)" />
+                            <div class="row">
+                                <div class="col-md-9"></div>
+                                <div class="col-md-3">
+                                    <input id="btnAddShelf" class="btn btn-success btn-fill" style="width:100px;" value="Ekle" onclick="drawShopMap()" />
                                 </div>
-                            </div>
-                        </div>
-                        <div class="row" style="margin-top: 10px;margin-left:0px !important;">
-                            <div class="col-md-3">
-                                <label>Raf Boyu</label>
-                            </div>
-                            <div class="col-md-1">
-                                <label>:</label>
-                            </div>
-                            <div class="col-md-8">
-                                <div class="form-group-sm">
-                                    <input class="form-control" name="shelfLength" type="number" placeholder="Raf Boyunu Giriniz (cm)" />
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row" style="margin-top: 10px;margin-left:0px !important;">
-                            <div class="col-md-3">
-                                <label>Raf Sayısı</label>
-                            </div>
-                            <div class="col-md-1">
-                                <label>:</label>
-                            </div>
-                            <div class="col-md-8">
-                                <div class="form-group-sm">
-                                    <input class="form-control" name="shelfCount" type="number" placeholder="Raf Sayısını Giriniz" />
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row" style="margin-top: 10px;margin-left:0px !important;">
-                            <div class="col-md-3">
-                                <label>Raf Kat Sayısı</label>
-                            </div>
-                            <div class="col-md-1">
-                                <label>:</label>
-                            </div>
-                            <div class="col-md-8">
-                                <div class="form-group-sm">
-                                    <input class="form-control" name="shelf" type="number" placeholder="Raf Katını Giriniz" />
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row" style="margin-top: 10px; margin-left:0px !important">
-                            <div class="col-md-9"></div>
-                            <div class="col-md-3">
-                                <input  id="btnAddShelf" class="btn btn-success btn-fill" style="width:100px;" value="Ekle" onclick="drawTable()" />
-                                @*<asp:Button ID="btnAddShelf" CssClass="btn btn-success btn-fill" runat="server" Text="Ekle" OnClick="btnAddShelf_Click" />*@
                             </div>
                         </div>
                     </div>
-                }
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="row" style="margin-left:0px !important;">
+                    <div class="card">
+                        <div class="header">
+                            <h4 class="title">Kullanılabilir Raflar</h4>
+                        </div>
+                        <div class="content">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Raf Adı</th>
+                                        <th>Kategori</th>
+                                        <th>Raf Kat Ayarları</th>
+                                    </tr>
+
+                                    @foreach (var item in Model)
+                                    {
+                                        <tr>
+                                            <td> @item.RafAdi</td>
+                                            <td> @item.KategoriAdi</td>
+                                            <td>
+                                                <a id="modal" href="#" class="btn btn-success btn-fill" data-target="@item.RafID" data-toggle="modal">Ayarlar</a>
+                                        </tr>
+                                    }
+                                </thead>
+                            </table>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-        <div class="row" style="margin-left:0px !important;">
+
+        <div class="col-md-12">
             <div class="card">
                 <div class="header">
-                    <h4 class="title">Kullanılabilir Raflar</h4>
+                    <h4 class="title">Mağaza Haritası</h4>
                 </div>
-                <div class="content">
-                    <table class="table table-hover">
-                        <thead>
-                        <th></th>
-                        <th>Raf Adı</th>
-                        <th>AltKategori</th>
-                        <th>Raf Tasarım</th>
-                        <th>Ekle</th>
-                        <th>Sil</th>
-                        </thead>
-                        <tbody></tbody>
-                    </table>
+                <div class="content ">
+                    <div class="row" style="padding: 0 20px; width:100%;">
+                        <div id="shelfsArea" class="text-center">
+                            <canvas id="game" width="800" height="800"></canvas>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <button id="addMapButton" class="btn btn-success btn-fill" style="float: right; margin-top: 10px;margin-right:20px;">Kaydet</button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    <div class="col-md-6">
-        <div class="card">
-            <div class="header">
-                <h4 class="title">Mağaza Haritası</h4>
-            </div>
-            <div class="content">
-                <div id="shelfsArea" class="container" style="background-color: #bdbdbd; width: 100%; height: 400px;">
-                    <canvas id="game" width="400" height="400"></canvas>
-                </div>
-                <button id="submitButton" type="submit" class="btn btn-success btn-fill" style="float: right; margin-top: 10px;" onclick="getHtml()">Ekle</button>
-            </div>
-        </div>
-    </div>
+    }
 </div>
 

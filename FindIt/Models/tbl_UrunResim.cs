@@ -11,7 +11,6 @@ namespace FindIt.Models
         [Key]
         public int UrunResim_ID { get; set; }
 
-        [Column(TypeName = "text")]
         [Required]
         public string UrunResim_Yol { get; set; }
 
