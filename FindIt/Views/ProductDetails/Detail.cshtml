@@ -16,141 +16,159 @@
     <link href="~/Content/leader-line.css" rel="stylesheet" />
     <!-- JQuery Files -->
     @Scripts.Render("~/bundles/modernizr")
-    <script src="Script/jquery-3.2.1.min.js" type="text/javascript"></script>
-    <script src="Script/leader-line.js"></script>
-    <script src="Script/leader-line.min.js.js"></script>
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @*<script src="~/Script/jquery-3.2.1.min.js" type="text/javascript"></script>*@
+    <script src="~/Scripts/MapShown.js"></script>
+    <script src="~/Scripts/jquery.cookie.js"></script>
 </head>
 <body class="body-costumer">
-        <div class="row">
-            <div class="col-md-6" style="padding: 50px;">
-                <div class="card" style="padding: 50px;">
-                    <div class="header">
-                        <h4 class="title">Ürün Detay</h4>
-                    </div>
-                    <div class="content">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="card" style="width: 200px;">
-                                    <div id="myCarousel" class="carousel slide" data-ride="carousel">
-                                        <ol class="carousel-indicators">
-                                            <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-                                        </ol>
-                                        <div class="carousel-inner">
-                                            <div class="item active">
-                                                <img id="productImage" class="img-responsive" src="~/@Model.ProductImageURL" style="width:200px;height:200px;" />
-                                            </div>
-                                        </div>
-                                        <a class="left carousel-control" href="#myCarousel" data-slide="prev">
-                                            <span class="glyphicon glyphicon-chevron-left"></span>
-                                            <span class="sr-only">Previous</span>
-                                        </a>
-                                        <a class="right carousel-control" href="#myCarousel" data-slide="next">
-                                            <span class="glyphicon glyphicon-chevron-right"></span>
-                                            <span class="sr-only">Next</span>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <label>Ürün Adı</label>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label id="labelProductName">@Model.ProductName</label>
-                                        </div>
-                                    </div>
-                                </div>
-                                <hr />
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <label>Ürün Fiyatı</label>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <label id="labelProductCost">@Model.ProductPrice</label>
-                                    </div>
-                                </div>
-                                <hr />
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <label>Stok Bilgisi</label>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <label id="labelStockInf">
-                                            @{ string stock = "";
-                                                if (Model.ProductStock != 0)
-                                                {
-                                                    stock = "Stokta var.";
-                                                }
-                                                else
-                                                {
-                                                    stock = "Stokta yok.";
-                                                }
-                                            }
-                                            @stock
-                                        </label>
-                                    </div>
-                                </div>
-                                <div class="clearfix"></div>
-                            </div>
-                        </div>
-                    </div>
+    <div class="modal fade" id="modelView" role="dialog" tabindex="-1" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 id="exampleModalLabel" style="font-weight:bold;">Find It</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
                 </div>
-                <div class="card" style="padding: 10px;">
+                <div class="modal-body">
+                    <!-- Modal Body Filling at PartialView -->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Kapat</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row" style="width:100%;">
+        <div class="col-md-6" style="padding-top: 50px;padding-left:40px;padding-right:40px;margin-right:-20px;">
+            <div class="card" style="padding: 50px;">
+                <div class="header">
+                    <h4 class="title">Ürün Detay</h4>
+                </div>
+                <div class="content">
                     <div class="row">
                         <div class="col-md-6">
-                            <label>Özellikler</label>
-                        </div>
-                        <div class="col-md-6">
-                            <label id="labelProductProperties">@Model.ProductSpecial</label>
-                        </div>
-                    </div>
-                </div>
-                <div class="card" style="margin-top: 20px; padding: 20px;">
-                    <div class="header">
-                        <h4 class="title">Arama</h4>
-                    </div>
-                    <div class="content">
-                        @using (Html.BeginForm("FilterPage", "Filter", FormMethod.Post))
-                        {
-                            <div class="form-group ">
-                                <div class="col-md-10">
-                                    <input type="text" class="form-control" id="inputlg" name="search" placeholder="Aradığınız ürünü buraya yazın" />
-                                    <input type="hidden" name="subCategory" value="0" />
-                                    <input type="hidden" name="productStock" value="yes" />
-                                </div>
-                                <div class="col-md-2">
-                                    <input type="submit" id="search" class="btn btn-success" name="searchBtn" value="Ara" style="width:50px;" />
+                            <div class="card" style="width: 200px;">
+                                <div id="myCarousel" class="carousel slide" data-ride="carousel">
+                                    <ol class="carousel-indicators">
+                                        <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+                                    </ol>
+                                    <div class="carousel-inner">
+                                        <div class="item active">
+                                            <img id="productImage" class="img-responsive" src="~/@Model.ProductImageURL" style="width:200px;height:200px;" />
+                                        </div>
+                                    </div>
+                                    <a class="left carousel-control" href="#myCarousel" data-slide="prev">
+                                        <span class="glyphicon glyphicon-chevron-left"></span>
+                                        <span class="sr-only">Previous</span>
+                                    </a>
+                                    <a class="right carousel-control" href="#myCarousel" data-slide="next">
+                                        <span class="glyphicon glyphicon-chevron-right"></span>
+                                        <span class="sr-only">Next</span>
+                                    </a>
                                 </div>
                             </div>
-                        }
+                        </div>
+                        <div class="col-md-6">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label>Ürün Adı</label>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label id="labelProductName">@Model.ProductName</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr />
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label>Ürün Fiyatı</label>
+                                </div>
+                                <div class="col-md-6">
+                                    <label id="labelProductCost">@Model.ProductPrice</label>
+                                </div>
+                            </div>
+                            <hr />
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label>Stok Bilgisi</label>
+                                </div>
+                                <div class="col-md-6">
+                                    <label id="labelStockInf">
+                                        @{ string stock = "";
+                                            if (Model.ProductStock != 0)
+                                            {
+                                                stock = "Stokta var.";
+                                            }
+                                            else
+                                            {
+                                                stock = "Stokta yok.";
+                                            }
+                                        }
+                                        @stock
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="row" style="margin-top:10px;">
+                                <div class="col-md-6">
+                                    <p id="inf" style="color:red;"></p>
+                                </div>
+                                <div class="col-md-6">
+                                    <input type="submit" id="addRoute" class="btn btn-success" name="addRoute" value="Rotaya ekle" onclick="getMap()" style="float:right;width:120px;" />                                    
+                                </div>
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="col-md-6" style="padding: 50px;">
-                <div class="card" style="padding: 25px;">
-                    <div class="header">
-                        <h4 class="title">Ürün Haritası</h4>
-                        <h6 class="card-subtitle mb-3 text-muted">Aradığınız ürünü haritayı kullanarak kolaylıkla bulabilirsiniz.</h6>
+            <div class="card" style="padding: 10px;margin-top:10px;">
+                <div class="row">
+                    <div class="col-md-4">
+                        <label>Özellikler</label>
                     </div>
-                    <div class="content" style="padding: 10px;">
-                        <div id="shelfsArea" class="container" style="background-color: #bdbdbd; width: 100%; height: 400px;">
-                            <%=harita %>
+                    <div class="col-md-8">
+                        <label id="labelProductProperties">@Model.ProductSpecial</label>
+                    </div>
+                </div>
+            </div>
+            <div class="card" style="margin-top: 20px; padding: 20px;">
+                <div class="header">
+                    <h4 class="title">Arama</h4>
+                </div>
+                <div class="content">
+                    @using (Html.BeginForm("FilterPage", "Filter", FormMethod.Post))
+                    {
+                        <div class="form-group ">
+                            <div class="col-md-10">
+                                <input type="text" class="form-control" id="inputlg" name="search" placeholder="Aradığınız ürünü buraya yazın" />
+                                <input type="hidden" name="subCategory" value="0" />
+                                <input type="hidden" name="productStock" value="yes" />
+                            </div>
+                            <div class="col-md-2">
+                                <input type="submit" id="search" class="btn btn-success" name="searchBtn" value="Ara" style="width:50px;" />
+                            </div>
                         </div>
+                    }
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6" style="padding-top:50px;">
+            <div class="card" style="padding: 25px;">
+                <div class="header">
+                    <h4 class="title">Ürün Haritası</h4>
+                    <h6 class="card-subtitle mb-3 text-muted">Aradığınız ürünü haritayı kullanarak kolaylıkla bulabilirsiniz.</h6>
+                </div>
+                <div class="content">
+                    <div id="shelfsArea" class="text-center">
+                        <canvas id="game" width="600" height="600"></canvas>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
 </body>
-@Scripts.Render("~/bundles/jquery")
-@Scripts.Render("~/bundles/bootstrap")
-<script>
-    new LeaderLine(
-        document.getElementById('raf18'),
-        document.getElementById('raf' +<%=rafID %> +''));
-    $('#raf' +<%=rafID %> +'').css('box-shadow', '0px 1px 19px 9px rgba(255,255,255,1');
-    $('#raf' +<%=rafID %> +'').css('background-color', '#ffe382');</script>
-<!-- Javascript File Written Us -->
-<script src="Script/script.js" type="text/javascript"></script>
 </html>

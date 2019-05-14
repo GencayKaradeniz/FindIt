@@ -17,6 +17,12 @@ namespace FindIt.Models
 
         public int? Bulunan_Kat_No { get; set; }
 
+        public int? RafBasX { get; set; }
+
+        public int? RafBitX { get; set; }
+
+        public int? RafY { get; set; }
+
         public virtual tbl_AltKategori tbl_AltKategori { get; set; }
 
         public virtual tbl_Raflar tbl_Raflar { get; set; }

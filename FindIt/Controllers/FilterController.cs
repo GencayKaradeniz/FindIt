@@ -41,9 +41,9 @@ namespace FindIt.Controllers
 
             while (reader.Read())
             {
-                SubCategoriesInf.Add(new tbl_AltKategori {  AltKategori_ID = Convert.ToInt16(reader["SubCategoryID"]),
-                                                            AltKategori_Ad = reader["SubCategoryName"].ToString(),
-                                                            Kategori_id = Convert.ToInt16(reader["CategoryID"]) });
+                SubCategoriesInf.Add(new tbl_AltKategori {  AltKategori_ID = Convert.ToInt16(reader["AltKategori_ID"]),
+                                                            AltKategori_Ad = reader["AltKategori_Ad"].ToString(),
+                                                            Kategori_id = Convert.ToInt16(reader["Kategori_id"]) });
             }
             connection.Close();
             reader.Close();

@@ -6,6 +6,9 @@ function drawShopMap() {
     var shelfL = document.getElementById('shelfLength').value;
     var shopW = document.getElementById('shopWidth').value;
     var shopH = document.getElementById('shopHeight').value;
+    var canvasW =$('#game').width();
+    var canvasH = $('#game').height();
+
     var shelfTotalCount;
     if (shelfL >= 100) {
         shelfL = shelfL / 100;
@@ -14,7 +17,7 @@ function drawShopMap() {
         shelfL = 1;
     }
 
-    var tileW = 800 / shopW, tileH = 800 / shopH;
+    var tileW = canvasW / shopW, tileH = canvasH / shopH;
     var shopMap = new Array(shopH)
 
     for (var i = 0; i < shopH; i++) {
@@ -93,42 +96,38 @@ function drawShopMap() {
     }
 
     shelfs.length = shelfCount;
-    var startX = 4, endX = 0, startY = 4, endY = 4;
+    var startX = 4, endX = 0, startY = 4;
     var shelfIndex = 0;
+
     //raf koordinat tespiti
     for (var i = 0; i < rowShelfCounter; i++) {
         endX = startX + shelfL - 1;
         for (var j = 0; j < shelfCount / rowShelfCounter; j++) {
-            shelfs[shelfIndex] = new Array(shelfIndex + 1, startX, endX, startY, endY);
+            shelfs[shelfIndex] = new Array(shelfIndex + 1, startX, endX, startY);
             if (flag == true) {
                 if (j == (shelfCount / rowShelfCounter) - 1) {
                     startY += 2;
-                    endY = startY;
                 }
                 else {
                     if ((j + 1) % 2 == 0) {
                         startY += 2;
-                        endY = startY;
                     }
                     else {
                         startY += 1;
-                        endY = startY;
                     }
                 }
             }
             else {
                 if ((j + 1) % 2 == 0) {
                     startY += 2;
-                    endY = startY;
                 }
                 else {
                     startY += 1;
-                    endY = startY;
                 }
             }
             shelfIndex++;
         }
-        startY = endY = 4;
+        startY = 4;
         startX = endX + 4;
     }
 

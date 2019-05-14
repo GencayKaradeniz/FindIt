@@ -162,6 +162,7 @@
     <Compile Include="Models\FinditDb.cs" />
     <Compile Include="Models\ProductDetails.cs" />
     <Compile Include="Models\ProductOperationsLists.cs" />
+    <Compile Include="Models\ProductShelfModal.cs" />
     <Compile Include="Models\Raflar.cs" />
     <Compile Include="Models\SearchWithFilter.cs" />
     <Compile Include="Models\tbl_AltKategori.cs" />
@@ -267,9 +268,8 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
-    <Content Include="Scripts\leader-line.js" />
-    <Content Include="Scripts\leader-line.min.js.js" />
     <Content Include="Scripts\MapCreater.js" />
+    <Content Include="Scripts\MapShown.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
@@ -293,6 +293,7 @@
     <Content Include="Views\Filter\FilterPage.cshtml" />
     <Content Include="Views\Map\MapDetails.cshtml" />
     <Content Include="Views\Map\CategoriesForMap.cshtml" />
+    <Content Include="Views\ProductDetails\ShowProductShelfInformation.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

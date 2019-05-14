@@ -24,10 +24,10 @@ namespace FindIt.Controllers
         public ActionResult CategoriesForMap(string rafID)
         {
             SqlParameter pRafID = new SqlParameter("@rafID", Convert.ToInt16(rafID));
-            var model = db.Database.SqlQuery<Raflar>("sp_GetShelfs @rafID", pRafID).ToList();            
+            var model = db.Database.SqlQuery<Raflar>("sp_GetShelfs @rafID", pRafID).ToList();
 
             int categoryID = Convert.ToInt16(model[0].KategoriID);
-            
+
             for (int i = 0; i < model.Count; i++)
             {
                 var subCategories = new List<SelectListItem>();
@@ -75,10 +75,14 @@ namespace FindIt.Controllers
                 string[] row = shelfs[i].Split(',');
                 int rafBasX = Convert.ToInt16(row[1]),
                      rafBitX = Convert.ToInt16(row[2]),
-                     rafBasY = Convert.ToInt16(row[3]),
-                     rafBitY = Convert.ToInt16(row[4]);
+                     rafY = Convert.ToInt16(row[3]);
 
-                db.Database.ExecuteSqlCommand("INSERT INTO tbl_Raflar (Raf_Ad,RafBasX,RafBitX,RafBasY,RafBitY,RafKat) VALUES (" + row[0] + "," + rafBasX + "," + rafBitX + "," + rafBasY + "," + rafBitY + "," + 4 + ")");
+                SqlParameter pShelfStartX = new SqlParameter("@shelfStartX", rafBasX);
+                SqlParameter pShelfEndX = new SqlParameter("@shelfEndX", rafBitX);
+                SqlParameter pShelfY = new SqlParameter("@shelfY", rafY);
+                SqlParameter pShelfName = new SqlParameter("@shelfName", row[0]);
+
+                db.Database.ExecuteSqlCommand("sp_MapCreater @shelfName,@shelfStartX,@shelfEndX,@shelfY", pShelfName, pShelfStartX, pShelfEndX, pShelfY);
             }
             return Json(new { message = "OK" });
         }

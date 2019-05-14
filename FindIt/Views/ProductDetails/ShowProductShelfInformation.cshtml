@@ -1,0 +1,50 @@
+﻿@model FindIt.Models.ProductShelfModal
+@{
+    ViewBag.Title = "ShowProductShelfInformation";
+}
+<!-- Kategori Adı, Alt Kategori Adı, Bulunduğu kat, Ürün adı-->
+<div class="row">
+    <div class="col-md-4">
+        <label>Ürün Adı</label>
+    </div>
+    <div class="col-md-1">
+        <label> : </label>
+    </div>
+    <div class="col-md-7">
+        <label>@Model.productName</label>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-4">
+        <label>Kategori Adı</label>
+    </div>
+    <div class="col-md-1">
+        <label> : </label>
+    </div>
+    <div class="col-md-7">
+        <label>@Model.categoryName</label>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-4">
+        <label>Alt Kategori Adı</label>
+    </div>
+    <div class="col-md-1">
+        <label> : </label>
+    </div>
+    <div class="col-md-7">
+        <label>@Model.subCategoryName</label>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-4">
+        <label>Ürünün bulunduğu kat(lar)</label>
+    </div>
+    <div class="col-md-1">
+        <label> : </label>
+    </div>
+    <div class="col-md-7">
+        <label>@Model.shelfRow</label>
+    </div>
+</div>
+

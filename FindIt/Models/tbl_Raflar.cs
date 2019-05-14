@@ -24,14 +24,6 @@ namespace FindIt.Models
 
         public int Kategori_id { get; set; }
 
-        public int RafBasX { get; set; }
-
-        public int RafBitX { get; set; }
-
-        public int RafBasY { get; set; }
-
-        public int RafBitY { get; set; }
-
         public int RafKat { get; set; }
 
         public virtual tbl_Kategori tbl_Kategori { get; set; }
