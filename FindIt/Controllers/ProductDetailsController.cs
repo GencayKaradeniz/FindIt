@@ -180,44 +180,10 @@ namespace FindIt.Controllers
         }
 
         [HttpPost]
-        public void CreateRoute(string id)
+        public ActionResult CreateRoute(string id)
         {
             ProductDetails p = GetProductCoordinates(id);
-
-            HttpCookie cookie1 = Request.Cookies["mapRouteCoordinates1"];
-            HttpCookie cookie2 = Request.Cookies["mapRouteCoordinates2"];
-            HttpCookie cookie3 = Request.Cookies["mapRouteCoordinates3"];
-
-            if (cookie1 == null)
-            {
-                HttpCookie cookies = new HttpCookie("mapRouteCoordinates1");
-                cookies["name"] = p.subCategoryName;
-                cookies["startXCoordinate"] = p.xStartCoordinate.ToString();
-                cookies["endXCoordinate"] = p.xEndCoordinate.ToString();
-                cookies["YCoordinate"] = p.yCoordinate.ToString();
-                cookies.Expires = DateTime.Now.AddDays(10);
-                Response.Cookies.Add(cookies);
-            }
-            else if(cookie2 == null)
-            {
-                HttpCookie cookies = new HttpCookie("mapRouteCoordinates2");
-                cookies["name"] = p.subCategoryName;
-                cookies["startXCoordinate"] = p.xStartCoordinate.ToString();
-                cookies["endXCoordinate"] = p.xEndCoordinate.ToString();
-                cookies["YCoordinate"] = p.yCoordinate.ToString();
-                cookies.Expires = DateTime.Now.AddDays(10);
-                Response.Cookies.Add(cookies);
-            }
-            else if(cookie3 == null)
-            {
-                HttpCookie cookies = new HttpCookie("mapRouteCoordinates3");
-                cookies["name"] = p.subCategoryName;
-                cookies["startXCoordinate"] = p.xStartCoordinate.ToString();
-                cookies["endXCoordinate"] = p.xEndCoordinate.ToString();
-                cookies["YCoordinate"] = p.yCoordinate.ToString();
-                cookies.Expires = DateTime.Now.AddDays(10);
-                Response.Cookies.Add(cookies);
-            }
+            return Json(p);
         }
     }
 }

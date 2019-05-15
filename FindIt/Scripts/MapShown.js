@@ -1,6 +1,79 @@
 ﻿
-function getMap() {
-    var txtButton = $('#addRoute').val();
+$(document).ready(function () {
+    var cookie3, cookieArray3 = [], cookies3 = [];
+    var cookie2, cookieArray2 = [], cookies2 = [];
+    var cookie1, cookieArray1 = [], cookies1 = [];
+
+    cookie3 = $.cookie("mapRouteCoordinates3");
+    cookie2 = $.cookie("mapRouteCoordinates2");
+    cookie1 = $.cookie("mapRouteCoordinates1");
+    var id = parseInt(location.pathname.substring(location.pathname.lastIndexOf("/") + 1));
+
+    if (cookie3 != null) {
+        cookie3 = cookie3.split('&');
+        cookie2 = cookie2.split('&');
+        cookie1 = cookie1.split('&');
+
+        for (i = 0; i < cookie3.length; i++) {
+            cookies3 = cookie3[i].split('=');
+            cookieArray3[i] = cookies3[1];
+
+            cookies2 = cookie2[i].split('=');
+            cookieArray2[i] = cookies2[1];
+
+            cookies1 = cookie1[i].split('=');
+            cookieArray1[i] = cookies1[1];
+        }
+
+        if (cookieArray1[0] == id || cookieArray2[0] == id || cookieArray3[0] == id) {
+            $('#addRoute').removeClass('btn-success');
+            $('#addRoute').addClass('btn-danger');
+            $('#addRoute').val('Rotadan çıkart');
+
+            drawRouteWithCookies();
+        }
+        else {
+            $('#addRoute').attr("disabled", true);
+        }
+    }
+    else if (cookie2 != null) {
+        cookie2 = cookie2.split('&');
+        cookie1 = cookie1.split('&');
+
+        for (i = 0; i < cookie2.length; i++) {
+            cookies2 = cookie2[i].split('=');
+            cookieArray2[i] = cookies2[1];
+
+            cookies1 = cookie1[i].split('=');
+            cookieArray1[i] = cookies1[1];
+        }
+
+        if (cookieArray1[0] == id || cookieArray2[0] == id) {
+            $('#addRoute').removeClass('btn-success');
+            $('#addRoute').addClass('btn-danger');
+            $('#addRoute').val('Rotadan çıkart');
+
+            drawRouteWithCookies();
+        }
+    }
+    else if (cookie1 != null) {
+        cookie1 = cookie1.split('&');
+
+        for (i = 0; i < cookie1.length; i++) {
+            cookies1 = cookie1[i].split('=');
+            cookieArray1[i] = cookies1[1];
+        }
+
+        if (cookieArray1[0] == id) {
+            $('#addRoute').removeClass('btn-success');
+            $('#addRoute').addClass('btn-danger');
+            $('#addRoute').val('Rotadan çıkart');
+            drawRouteWithCookies();
+        }
+    }
+});
+
+function drawRouteWithCookies() {
     var ctx = null;
     var finditScreenX = 2;
     var finditScreenY = 14;
@@ -8,142 +81,231 @@ function getMap() {
     var colorLine, colorTarget;
 
     var cookieManhattanArray = new Array(3);
+    var cookie3, cookieArray3 = [], cookies3 = [];
+    var cookie2, cookieArray2 = [], cookies2 = [];
+    var cookie1, cookieArray1 = [], cookies1 = [];
+
+    cookie3 = $.cookie("mapRouteCoordinates3");
+    cookie2 = $.cookie("mapRouteCoordinates2");
+    cookie1 = $.cookie("mapRouteCoordinates1");
+
+    if ($.cookie("mapRouteCoordinates3") != null) {
+        cookie3 = cookie3.split('&');
+        cookie2 = cookie2.split('&');
+        cookie1 = cookie1.split('&');
+
+        for (i = 0; i < cookie3.length; i++) {
+            cookies3 = cookie3[i].split('=');
+            cookieArray3[i] = cookies3[1];
+
+            cookies2 = cookie2[i].split('=');
+            cookieArray2[i] = cookies2[1];
+
+            cookies1 = cookie1[i].split('=');
+            cookieArray1[i] = cookies1[1];
+        }
+
+        cookieManhattanArray[0] = [Math.abs(finditScreenX - Math.floor((parseInt(cookieArray1[1]) + parseInt(cookieArray1[2])) / 2)) + Math.abs(finditScreenY - parseInt(cookieArray1[3])), cookieArray1];
+        cookieManhattanArray[1] = [Math.abs(finditScreenX - Math.floor((parseInt(cookieArray2[1]) + parseInt(cookieArray2[2])) / 2)) + Math.abs(finditScreenY - parseInt(cookieArray2[3])), cookieArray2];
+        cookieManhattanArray[2] = [Math.abs(finditScreenX - Math.floor((parseInt(cookieArray3[1]) + parseInt(cookieArray3[2])) / 2)) + Math.abs(finditScreenY - parseInt(cookieArray3[3])), cookieArray3];
+        cookieManhattanArray.sort(function (a, b) { return a[0] - b[0] });
+
+        colorLine = '#d53f4e';
+        colorTarget = '#eced4d';
+        ManhattanArray = calculateManhattanArray(10, shopMap, finditScreenX, finditScreenY, Math.floor((parseInt(cookieManhattanArray[0][1][1]) + parseInt(cookieManhattanArray[0][1][2])) / 2), parseInt(cookieManhattanArray[0][1][3]));
+        drawRoute(ManhattanArray, shopMap, colorLine, colorTarget);
+
+        colorLine = '#83ffc8';
+        colorTarget = '#ff83dc';
+        ManhattanArray = calculateManhattanArray(10, shopMap, ManhattanArray[ManhattanArray.length - 1][0], ManhattanArray[ManhattanArray.length - 1][1], Math.floor((parseInt(cookieManhattanArray[1][1][1]) + parseInt(cookieManhattanArray[1][1][2])) / 2), parseInt(cookieManhattanArray[1][1][3]));
+        drawRoute(ManhattanArray, shopMap, colorLine, colorTarget);
+
+        colorLine = '#2a1b26';
+        colorTarget = '#af83dc';
+        ManhattanArray = calculateManhattanArray(10, shopMap, ManhattanArray[ManhattanArray.length - 1][0], ManhattanArray[ManhattanArray.length - 1][1], Math.floor((parseInt(cookieManhattanArray[2][1][1]) + parseInt(cookieManhattanArray[2][1][2])) / 2), parseInt(cookieManhattanArray[2][1][3]));
+        drawRoute(ManhattanArray, shopMap, colorLine, colorTarget);
+
+    }
+    else if ($.cookie("mapRouteCoordinates2") != null) {
+
+        cookie2 = cookie2.split('&');
+        cookie1 = cookie1.split('&');
+
+        for (i = 0; i < cookie2.length; i++) {
+            cookies2 = cookie2[i].split('=');
+            cookieArray2[i] = cookies2[1];
+
+            cookies1 = cookie1[i].split('=');
+            cookieArray1[i] = cookies1[1];
+        }
+        var ManhattanArray;
+        cookieManhattanArray[0] = [Math.abs(finditScreenX - Math.floor((parseInt(cookieArray1[1]) + parseInt(cookieArray1[2])) / 2)) + Math.abs(finditScreenY - parseInt(cookieArray1[3]))];
+        cookieManhattanArray[1] = [Math.abs(finditScreenX - Math.floor((parseInt(cookieArray2[1]) + parseInt(cookieArray2[2])) / 2)) + Math.abs(finditScreenY - parseInt(cookieArray2[3]))];
+        if (cookieManhattanArray[0] < cookieManhattanArray[1]) {
+            colorLine = '#d53f4e';
+            colorTarget = '#eced4d';
+            ManhattanArray = calculateManhattanArray(10, shopMap, finditScreenX, finditScreenY, Math.floor((parseInt(cookieArray1[1]) + parseInt(cookieArray1[2])) / 2), parseInt(cookieArray1[3]));
+            drawRoute(ManhattanArray, shopMap, colorLine, colorTarget);
+            colorLine = '#83ffc8';
+            colorTarget = '#ff83dc';
+            ManhattanArray = calculateManhattanArray(10, shopMap, ManhattanArray[ManhattanArray.length - 1][0], ManhattanArray[ManhattanArray.length - 1][1], Math.floor((parseInt(cookieArray2[1]) + parseInt(cookieArray2[2])) / 2), parseInt(cookieArray2[3]));
+            drawRoute(ManhattanArray, shopMap, colorLine, colorTarget);
+        }
+        else {
+            colorLine = '#d53f4e';
+            colorTarget = '#eced4d';
+            ManhattanArray = calculateManhattanArray(10, shopMap, finditScreenX, finditScreenY, Math.floor((parseInt(cookieArray2[1]) + parseInt(cookieArray2[2])) / 2), parseInt(cookieArray2[3]));
+            drawRoute(ManhattanArray, shopMap, colorLine, colorTarget);
+            colorLine = '#83ffc8';
+            colorTarget = '#ff83dc';
+            ManhattanArray = calculateManhattanArray(10, shopMap, ManhattanArray[ManhattanArray.length - 1][0], ManhattanArray[ManhattanArray.length - 1][1], Math.floor((parseInt(cookieArray1[1]) + parseInt(cookieArray1[2])) / 2), parseInt(cookieArray1[3]));
+            drawRoute(ManhattanArray, shopMap, colorLine, colorTarget);
+        }
+    }
+    else if ($.cookie("mapRouteCoordinates1") != null) {
+
+        cookie1 = cookie1.split('&');
+
+        for (i = 0; i < cookie1.length; i++) {
+            cookies1 = cookie1[i].split('=');
+            cookieArray1[i] = cookies1[1];
+        }
+        colorLine = '#d53f4e';
+        colorTarget = '#eced4d';
+        var ManhattanArray = calculateManhattanArray(10, shopMap, finditScreenX, finditScreenY, Math.floor((parseInt(cookieArray1[1]) + parseInt(cookieArray1[2])) / 2), parseInt(cookieArray1[3]));
+        drawRoute(ManhattanArray, shopMap, colorLine, colorTarget);
+    }
+}
+
+function getMap() {
+    var txtButton = $('#addRoute').val();
+
 
     var cookie3, cookieArray3 = [], cookies3 = [];
     var cookie2, cookieArray2 = [], cookies2 = [];
     var cookie1, cookieArray1 = [], cookies1 = [];
-    if (txtButton == 'Rotaya ekle') {
-        if ($.cookie("mapRouteCoordinates3") == null || $.cookie("mapRouteCoordinates2") == null || $.cookie("mapRouteCoordinates1") == null) {
-            $('#addRoute').removeClass('btn-success');
-            $('#addRoute').addClass('btn-danger');
-            $('#addRoute').val('Rotadan çıkart');
-            $('#inf').html('');
-            $('#inf').html('Rotaya ürün eklendi');
 
-            var id = parseInt(location.pathname.substring(location.pathname.lastIndexOf("/") + 1));
-            $.ajax({
-                type: 'POST',
-                url: '/ProductDetails/CreateRoute',
-                data: JSON.stringify({ id: id }),
-                dataType: "json",
-                contentType: 'application/json; charset=utf-8',
-                success: function (result) { }
-            });
-            if ($.cookie("mapRouteCoordinates3") != null) {
+    cookie3 = $.cookie("mapRouteCoordinates3");
+    cookie2 = $.cookie("mapRouteCoordinates2");
+    cookie1 = $.cookie("mapRouteCoordinates1");
+
+    var id = parseInt(location.pathname.substring(location.pathname.lastIndexOf("/") + 1));
+    $.ajax({
+        type: 'POST',
+        url: '/ProductDetails/CreateRoute',
+        data: JSON.stringify({ id: id }),
+        dataType: "json",
+        contentType: 'application/json; charset=utf-8',
+        success: function (result) {
+
+            if (txtButton == 'Rotaya ekle') {
+                if (cookie1 == null || cookie2 == null || cookie3 == null) {
+                    $('#addRoute').removeClass('btn-success');
+                    $('#addRoute').addClass('btn-danger');
+                    $('#addRoute').val('Rotadan çıkart');
+                    $('#inf').html('');
+                    $('#inf').html('Rotaya ürün eklendi');
+                    $.post('../ShowProductShelfInformation',
+                        {
+                            productID: id
+                        },
+                        function (data) {
+                            $('#modelView .modal-body').html(data);
+                            $('#modelView').modal('show');
+                        });
+                    $.cookie.raw = true;
+                    var obj = { ID: id, startXCoordinate: result.xStartCoordinate, endXCoordinate: result.xEndCoordinate, yCoordinate: result.yCoordinate };
+                    if (cookie1 == null) {
+                        $.cookie("mapRouteCoordinates1", $.param(obj), { expires: 10 });
+                    }
+                    else if (cookie2 == null) {
+                        $.cookie("mapRouteCoordinates2", $.param(obj), { expires: 10 });
+                    }
+                    else if (cookie3 == null) {
+                        $.cookie("mapRouteCoordinates3", $.param(obj), { expires: 10 });
+                    }
+
+                    drawRouteWithCookies();
+                }
+                else {
+                    alert('Daha fazla ürün ekleyemezsiniz.');
+                }
+            }
+            else {
+                $('#addRoute').removeClass('btn-danger');
+                $('#addRoute').addClass('btn-success');
+                $('#addRoute').val('Rotaya ekle');
+                $('#inf').html('');
+                $('#inf').html('Rotadan ürün çıkartıldı.');
+
+                //cookieler doldurulduğu için tekrar değerleri çekildi.
                 cookie3 = $.cookie("mapRouteCoordinates3");
                 cookie2 = $.cookie("mapRouteCoordinates2");
                 cookie1 = $.cookie("mapRouteCoordinates1");
+                var changerCookie;
+                $.cookie.raw = true;
+                if (cookie3 != null) {
+                    cookie3 = cookie3.split('&');
+                    cookie2 = cookie2.split('&');
+                    cookie1 = cookie1.split('&');
 
-                cookie3 = cookie3.split('&');
-                cookie2 = cookie2.split('&');
-                cookie1 = cookie1.split('&');
+                    for (i = 0; i < cookie3.length; i++) {
+                        cookies3 = cookie3[i].split('=');
+                        cookieArray3[i] = cookies3[1];
 
-                for (i = 0; i < cookie3.length; i++) {
-                    cookies3 = cookie3[i].split('=');
-                    cookieArray3[i] = cookies3[1];
+                        cookies2 = cookie2[i].split('=');
+                        cookieArray2[i] = cookies2[1];
 
-                    cookies2 = cookie2[i].split('=');
-                    cookieArray2[i] = cookies2[1];
+                        cookies1 = cookie1[i].split('=');
+                        cookieArray1[i] = cookies1[1];
+                    }
 
-                    cookies1 = cookie1[i].split('=');
-                    cookieArray1[i] = cookies1[1];
+                    if (cookieArray3[0] == id) {
+                        $.cookie("mapRouteCoordinates3", null, { expires: -1 });
+                    }
+                    else if (cookieArray2[0] == id) {
+                        changerCookie = $.cookie("mapRouteCoordinates3");
+                        $.cookie("mapRouteCoordinates2", changerCookie, { expires: 10 });
+                        $.cookie("mapRouteCoordinates3", null, { expires: -1 });
+                    }
+                    else if (cookieArray1[0] == id) {
+                        changerCookie = $.cookie("mapRouteCoordinates2");
+                        $.cookie("mapRouteCoordinates1", changerCookie, { expires: 10 });
+                        changerCookie = $.cookie("mapRouteCoordinates3");
+                        $.cookie("mapRouteCoordinates2", changerCookie, { expires: 10 });
+                        $.cookie("mapRouteCoordinates3", null, { expires: -1 });
+                    }
+                    drawRouteWithCookies();
                 }
+                else if (cookie2 != null) {
+                    cookie2 = cookie2.split('&');
+                    cookie1 = cookie1.split('&');
 
-                cookieManhattanArray[0] = [Math.abs(finditScreenX - Math.floor((parseInt(cookieArray1[1]) + parseInt(cookieArray1[2])) / 2)) + Math.abs(finditScreenY - parseInt(cookieArray1[3])), cookieArray1];
-                cookieManhattanArray[1] = [Math.abs(finditScreenX - Math.floor((parseInt(cookieArray2[1]) + parseInt(cookieArray2[2])) / 2)) + Math.abs(finditScreenY - parseInt(cookieArray2[3])), cookieArray2];
-                cookieManhattanArray[2] = [Math.abs(finditScreenX - Math.floor((parseInt(cookieArray3[1]) + parseInt(cookieArray3[2])) / 2)) + Math.abs(finditScreenY - parseInt(cookieArray3[3])), cookieArray3];
-                cookieManhattanArray.sort(function (a, b) { return a[0] - b[0] });
+                    for (i = 0; i < cookie2.length; i++) {
+                        cookies2 = cookie2[i].split('=');
+                        cookieArray2[i] = cookies2[1];
 
-                colorLine = '#d53f4e';
-                colorTarget = '#eced4d';
-                ManhattanArray = calculateManhattanArray(10, shopMap, finditScreenX, finditScreenY, Math.floor((parseInt(cookieManhattanArray[0][1][1]) + parseInt(cookieManhattanArray[0][1][2])) / 2), parseInt(cookieManhattanArray[0][1][3]));
-                drawRoute(ManhattanArray, shopMap, colorLine, colorTarget);
+                        cookies1 = cookie1[i].split('=');
+                        cookieArray1[i] = cookies1[1];
+                    }
 
-                colorLine = '#83ffc8';
-                colorTarget = '#ff83dc';
-                ManhattanArray = calculateManhattanArray(10, shopMap, ManhattanArray[ManhattanArray.length - 1][0], ManhattanArray[ManhattanArray.length - 1][1], Math.floor((parseInt(cookieManhattanArray[1][1][1]) + parseInt(cookieManhattanArray[1][1][2])) / 2), parseInt(cookieManhattanArray[1][1][3]));
-                drawRoute(ManhattanArray, shopMap, colorLine, colorTarget);
-
-                colorLine = '#2a1b26';
-                colorTarget = '#af83dc';
-                ManhattanArray = calculateManhattanArray(10, shopMap, ManhattanArray[ManhattanArray.length - 1][0], ManhattanArray[ManhattanArray.length - 1][1], Math.floor((parseInt(cookieManhattanArray[2][1][1]) + parseInt(cookieManhattanArray[2][1][2])) / 2), parseInt(cookieManhattanArray[2][1][3]));
-                drawRoute(ManhattanArray, shopMap, colorLine, colorTarget);
-
-            }
-            else if ($.cookie("mapRouteCoordinates2") != null) {
-
-                cookie2 = $.cookie("mapRouteCoordinates2");
-                cookie1 = $.cookie("mapRouteCoordinates1");
-
-                cookie2 = cookie2.split('&');
-                cookie1 = cookie1.split('&');
-
-                for (i = 0; i < cookie2.length; i++) {
-                    cookies2 = cookie2[i].split('=');
-                    cookieArray2[i] = cookies2[1];
-
-                    cookies1 = cookie1[i].split('=');
-                    cookieArray1[i] = cookies1[1];
+                    if (cookieArray2[0] == id) {
+                        $.cookie("mapRouteCoordinates2", null, { expires: -1 });
+                    }
+                    else if (cookieArray1[0] == id) {
+                        changerCookie = $.cookie("mapRouteCoordinates2");
+                        $.cookie("mapRouteCoordinates1", changerCookie, { expires: 10 });
+                        $.cookie("mapRouteCoordinates2", null, { expires: -1 });
+                    }
+                    drawRouteWithCookies();
                 }
-                var ManhattanArray;
-                cookieManhattanArray[0] = [Math.abs(finditScreenX - Math.floor((parseInt(cookieArray1[1]) + parseInt(cookieArray1[2])) / 2)) + Math.abs(finditScreenY - parseInt(cookieArray1[3]))];
-                cookieManhattanArray[1] = [Math.abs(finditScreenX - Math.floor((parseInt(cookieArray2[1]) + parseInt(cookieArray2[2])) / 2)) + Math.abs(finditScreenY - parseInt(cookieArray2[3]))];
-                if (cookieManhattanArray[0] < cookieManhattanArray[1]) {
-                    colorLine = '#d53f4e';
-                    colorTarget = '#eced4d';
-                    ManhattanArray = calculateManhattanArray(10, shopMap, finditScreenX, finditScreenY, Math.floor((parseInt(cookieArray1[1]) + parseInt(cookieArray1[2])) / 2), parseInt(cookieArray1[3]));
-                    drawRoute(ManhattanArray, shopMap, colorLine, colorTarget);
-                    colorLine = '#83ffc8';
-                    colorTarget = '#ff83dc';
-                    ManhattanArray = calculateManhattanArray(10, shopMap, ManhattanArray[ManhattanArray.length - 1][0], ManhattanArray[ManhattanArray.length - 1][1], Math.floor((parseInt(cookieArray2[1]) + parseInt(cookieArray2[2])) / 2), parseInt(cookieArray2[3]));
-                    drawRoute(ManhattanArray, shopMap, colorLine, colorTarget);
-                }
-                else {
-                    colorLine = '#d53f4e';
-                    colorTarget = '#eced4d';
-                    ManhattanArray = calculateManhattanArray(10, shopMap, finditScreenX, finditScreenY, Math.floor((parseInt(cookieArray2[1]) + parseInt(cookieArray2[2])) / 2), parseInt(cookieArray2[3]));
-                    drawRoute(ManhattanArray, shopMap, colorLine, colorTarget);
-                    colorLine = '#83ffc8';
-                    colorTarget = '#ff83dc';
-                    ManhattanArray = calculateManhattanArray(10, shopMap, ManhattanArray[ManhattanArray.length - 1][0], ManhattanArray[ManhattanArray.length - 1][1], Math.floor((parseInt(cookieArray1[1]) + parseInt(cookieArray1[2])) / 2), parseInt(cookieArray1[3]));
-                    drawRoute(ManhattanArray, shopMap, colorLine, colorTarget);
+                else if (cookie1 != null) {
+                    $.cookie("mapRouteCoordinates1", null, { expires: -1 });
+                    drawRouteWithCookies();
                 }
             }
-            else if ($.cookie("mapRouteCoordinates1") != null) {
-
-                cookie1 = $.cookie("mapRouteCoordinates1");
-
-                cookie1 = cookie1.split('&');
-
-                for (i = 0; i < cookie1.length; i++) {
-                    cookies1 = cookie1[i].split('=');
-                    cookieArray1[i] = cookies1[1];
-                }
-                colorLine = '#d53f4e';
-                colorTarget = '#eced4d';
-                var ManhattanArray = calculateManhattanArray(10, shopMap, finditScreenX, finditScreenY, Math.floor((parseInt(cookieArray1[1]) + parseInt(cookieArray1[2])) / 2), parseInt(cookieArray1[3]));
-                drawRoute(ManhattanArray, shopMap, colorLine, colorTarget);
-            }
-            $.post('../ShowProductShelfInformation',
-                {
-                    productID: id
-                },
-                function (data) {
-                    $('#modelView .modal-body').html(data);
-                    $('#modelView').modal('show');
-                });
         }
-        else {
-            alert('Daha fazla ürün ekleyemezsiniz.');
-        }
-    }
-    else {
-        $('#addRoute').removeClass('btn-danger');
-        $('#addRoute').addClass('btn-success');
-        $('#addRoute').val('Rotaya ekle');
-        $('#inf').html('');
-        $('#inf').html('Rotadan ürün çıkartıldı.');
-    }
+    });
 }
 
 function drawMap(finditScreenX, finditScreenY) {
@@ -478,7 +640,7 @@ function calculateManhattanArray(shelfL, shopMap, finditScreenX, finditScreenY, 
 
                         //İkinci köşe noktası
                         yStart2 = yStart;
-                        xStart2 = xStart -13;
+                        xStart2 = xStart - 13;
                     }
                     else {
                         //Birinci köşe noktası
@@ -492,7 +654,7 @@ function calculateManhattanArray(shelfL, shopMap, finditScreenX, finditScreenY, 
                 }
 
             }
-            if ((Math.abs(xStart - xEnd) + Math.abs(yStart - yEnd)) <= (shelfL-3)) {
+            if ((Math.abs(xStart - xEnd) + Math.abs(yStart - yEnd)) <= (shelfL - 3)) {
                 break;
             }
             else {
