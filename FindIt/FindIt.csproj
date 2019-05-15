@@ -190,6 +190,7 @@
     <Content Include="Images\indir.jpe" />
     <Content Include="Images\sidebar.jpg" />
     <Content Include="Images\solucangubresi.jpeg" />
+    <Content Include="Images\sut-icim.jpg" />
     <Content Include="Panel-Theme\css\animate.min.css" />
     <Content Include="Panel-Theme\css\bootstrap.min.css" />
     <Content Include="Panel-Theme\css\demo.css" />

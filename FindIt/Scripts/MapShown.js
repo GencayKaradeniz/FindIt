@@ -7,6 +7,7 @@ $(document).ready(function () {
     cookie3 = $.cookie("mapRouteCoordinates3");
     cookie2 = $.cookie("mapRouteCoordinates2");
     cookie1 = $.cookie("mapRouteCoordinates1");
+
     var id = parseInt(location.pathname.substring(location.pathname.lastIndexOf("/") + 1));
 
     if (cookie3 != null) {
@@ -29,10 +30,10 @@ $(document).ready(function () {
             $('#addRoute').removeClass('btn-success');
             $('#addRoute').addClass('btn-danger');
             $('#addRoute').val('Rotadan çıkart');
-
-            drawRouteWithCookies();
         }
         else {
+            $('#inf').html('');
+            $('#inf').html('Rotaya daha fazla ürün eklenemez.');
             $('#addRoute').attr("disabled", true);
         }
     }
@@ -52,8 +53,6 @@ $(document).ready(function () {
             $('#addRoute').removeClass('btn-success');
             $('#addRoute').addClass('btn-danger');
             $('#addRoute').val('Rotadan çıkart');
-
-            drawRouteWithCookies();
         }
     }
     else if (cookie1 != null) {
@@ -68,9 +67,11 @@ $(document).ready(function () {
             $('#addRoute').removeClass('btn-success');
             $('#addRoute').addClass('btn-danger');
             $('#addRoute').val('Rotadan çıkart');
-            drawRouteWithCookies();
         }
     }
+
+    //Ürün detay sayfası açıldığında mevcut yolu çizme
+    drawRouteWithCookies();
 });
 
 function drawRouteWithCookies() {
