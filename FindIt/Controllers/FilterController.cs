@@ -30,26 +30,44 @@ namespace FindIt.Controllers
             SqlParameter pSubCategory = new SqlParameter("@altkategori", Convert.ToInt16(subCategory));
             var products = Db.Database.SqlQuery<SearchWithFilter>("sp_SearchProductList @search, @stok, @altkategori", pSearch, pStock, pSubCategory).ToList();
 
+            string[] productID = new string[3];
 
-            connection.Open();
-            command = new SqlCommand("sp_GetFilteringSubCategory", connection);
-            command.CommandType = CommandType.StoredProcedure;
-            command.Parameters.AddWithValue("@search", search);
-            command.ExecuteNonQuery();
-            reader = command.ExecuteReader();
-            var SubCategoriesInf = new List<tbl_AltKategori>();
-
-            while (reader.Read())
+            HttpCookie cookie1 = Request.Cookies["mapRouteCoordinates1"];
+            HttpCookie cookie2 = Request.Cookies["mapRouteCoordinates2"];
+            HttpCookie cookie3 = Request.Cookies["mapRouteCoordinates3"];
+            if (cookie3 != null)
             {
-                SubCategoriesInf.Add(new tbl_AltKategori {  AltKategori_ID = Convert.ToInt16(reader["AltKategori_ID"]),
-                                                            AltKategori_Ad = reader["AltKategori_Ad"].ToString(),
-                                                            Kategori_id = Convert.ToInt16(reader["Kategori_id"]) });
+                productID[0] = cookie1["ID"].ToString();
+                productID[1] = cookie2["ID"].ToString();
+                productID[2] = cookie3["ID"].ToString();
+
             }
-            connection.Close();
-            reader.Close();
-
-            return View(Tuple.Create(products, SubCategoriesInf));
+            else if (cookie2 != null)
+            {
+                productID[0] = cookie1["ID"].ToString();
+                productID[1] = cookie2["ID"].ToString();
+            }
+            else if (cookie1 != null)
+            {
+                productID[0] = cookie1["ID"].ToString();
+            }
+            var model = new List<ProductRouteList>();
+            if (cookie1 != null)
+            {
+                int i = 0;
+                while (productID[i] != null)
+                {
+                    SqlParameter pProductID = new SqlParameter("@productID", Convert.ToInt16(productID[i]));
+                    var items = Db.Database.SqlQuery<ProductRouteList>("sp_RouteListProducts @productID", pProductID).ToList();
+                    model.Add(new ProductRouteList { productName = items[0].productName, productImage = items[0].productImage, subCategoryName = items[0].subCategoryName });
+                    i++;
+                    if (i == 3)
+                    {
+                        break;
+                    }
+                }
+            }
+            return View(Tuple.Create(products, model));
         }
-
     }
 }

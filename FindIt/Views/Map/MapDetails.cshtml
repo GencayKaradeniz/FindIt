@@ -15,6 +15,20 @@
                     rafID: rafid
                 },
                 function (data) {
+                    $('#modelView .modal-body').html('');
+                    $('#modelView .modal-body').html(data);
+                    $('#modelView').modal('show');
+              });
+        });
+
+        $('body').on("click","#editshelfs",function () {
+            var rafid = $(this).data("target");
+            //bu urlimizi post et
+            $.post('@Url.Action("AddNewShelf", "Map")',
+                {
+                },
+                function (data) {
+                    $('#modelView .modal-body').html('');
                     $('#modelView .modal-body').html(data);
                     $('#modelView').modal('show');
               });
@@ -24,8 +38,6 @@
 <script src="~/Scripts/MapCreater.js"></script>
 <input id="harita" type="hidden" name="html" />
 <input type="hidden" name="operation" value="save" />
-@using (Html.BeginForm("ShelfRowSave", "Map", FormMethod.Post))
-{
     <div class="modal fade" id="modelView" role="dialog" tabindex="-1" aria-labelledby="myModalLabel">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -40,12 +52,12 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Kapat</button>
-                    <button type="button" class="btn btn-primary">Kaydet</button>
+                    <button type="button" class="btn btn-primary" onclick="addShelf()">Kaydet</button>
                 </div>
             </div>
         </div>
     </div>
-}
+    
 <div class="row">
     @using (Html.BeginForm("MapDetails", "Map", FormMethod.Post))
     {
@@ -131,6 +143,11 @@
                                                 <a id="modal" href="#" class="btn btn-success btn-fill" data-target="@item.RafID" data-toggle="modal">Ayarlar</a>
                                         </tr>
                                     }
+                                    <tr>
+                                        <td></td>
+                                        <td></td>
+                                        <td><a id="editshelfs" href="#" class="btn btn-info btn-fill" data-toggle="modal">Raf Seç</a></td>
+                                    </tr>
                                 </thead>
                             </table>
                         </div>

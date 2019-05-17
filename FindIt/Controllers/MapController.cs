@@ -19,7 +19,23 @@ namespace FindIt.Controllers
             return View(shelfs);
         }
 
+        [HttpPost]
+        public ActionResult AddNewShelf()
+        {
+            var categoryModel = db.Database.SqlQuery<tbl_Kategori>("SELECT Kategori_Ad,Kategori_ID FROM tbl_Kategori").ToList();
 
+            var shelfModel = db.Database.SqlQuery<AddShelfviaCategory>("SELECT Raf_ID AS	 'ShelfID', Raf_Ad AS 'ShelfName' FROM tbl_Raflar WHERE Kategori_id IS NULL").ToList();
+
+            return PartialView(Tuple.Create(categoryModel, shelfModel));
+        }
+
+        [HttpPost]
+        public ActionResult EditingShelfs(string shelfID, string categoryID)
+        {
+            var message = "OK";
+            db.Database.ExecuteSqlCommand("UPDATE tbl_Raflar SET Kategori_id = " + Convert.ToInt16(categoryID) + " WHERE Raf_ID = " + Convert.ToInt16(shelfID) + "");
+            return Json(message);
+        }
         [HttpPost]
         public ActionResult CategoriesForMap(string rafID)
         {

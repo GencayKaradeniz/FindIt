@@ -1,0 +1,32 @@
+﻿@model Tuple<List<FindIt.Models.tbl_Kategori>, List<FindIt.Models.AddShelfviaCategory>>
+@{
+    ViewBag.Title = "CategoriesForMap";
+}
+<div class="row">
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th class="text-center">Raf Adı</th>
+                <th class="text-center">Raf Kategorisi</th>
+            </tr>
+        </thead>
+            <tr>
+                <td class="text-center">
+                    <select id="shelfID" class="form-control">
+                        @foreach (var item in Model.Item2)
+                        {
+                            <option value="@item.ShelfID">@item.ShelfName</option>
+                        }
+                    </select>
+                </td>
+                <td class="text-center">
+                    <select id="categoryID" class="form-control">
+                        @foreach (var item in Model.Item1)
+                        {
+                            <option value="@item.Kategori_ID">@item.Kategori_Ad</option>
+                        }
+                    </select>
+                </td>
+            </tr>
+    </table>
+</div>

@@ -10,6 +10,13 @@ $(document).ready(function () {
 
     var id = parseInt(location.pathname.substring(location.pathname.lastIndexOf("/") + 1));
 
+    if (cookie1 == null && cookie2 == null && cookie3 == null) {
+        $('#infList').html('Listeniz şuanda boş');
+        $('#showRouteList').prop("disabled", true);
+    }
+    else {
+        $('#showRouteList').prop("disabled", false);
+    }
     if (cookie3 != null) {
         cookie3 = cookie3.split('&');
         cookie2 = cookie2.split('&');
@@ -34,8 +41,9 @@ $(document).ready(function () {
         else {
             $('#inf').html('');
             $('#inf').html('Rotaya daha fazla ürün eklenemez.');
-            $('#addRoute').attr("disabled", true);
+            $('#addRoute').prop("disabled",true);
         }
+
     }
     else if (cookie2 != null) {
         cookie2 = cookie2.split('&');
@@ -200,6 +208,7 @@ function getMap() {
         success: function (result) {
 
             if (txtButton == 'Rotaya ekle') {
+               
                 if (cookie1 == null || cookie2 == null || cookie3 == null) {
                     $('#addRoute').removeClass('btn-success');
                     $('#addRoute').addClass('btn-danger');
@@ -217,12 +226,15 @@ function getMap() {
                     $.cookie.raw = true;
                     var obj = { ID: id, startXCoordinate: result.xStartCoordinate, endXCoordinate: result.xEndCoordinate, yCoordinate: result.yCoordinate };
                     if (cookie1 == null) {
+                        $.cookie("mapRouteCoordinates1", $.param(obj), { path: '/' }, { expires: 10 });
                         $.cookie("mapRouteCoordinates1", $.param(obj), { expires: 10 });
                     }
                     else if (cookie2 == null) {
+                        $.cookie("mapRouteCoordinates2", $.param(obj), { path: '/' }, { expires: 10 });
                         $.cookie("mapRouteCoordinates2", $.param(obj), { expires: 10 });
                     }
                     else if (cookie3 == null) {
+                        $.cookie("mapRouteCoordinates3", $.param(obj), { path: '/' }, { expires: 10 });
                         $.cookie("mapRouteCoordinates3", $.param(obj), { expires: 10 });
                     }
 
@@ -231,6 +243,8 @@ function getMap() {
                 else {
                     alert('Daha fazla ürün ekleyemezsiniz.');
                 }
+
+                
             }
             else {
                 $('#addRoute').removeClass('btn-danger');
@@ -243,7 +257,7 @@ function getMap() {
                 cookie3 = $.cookie("mapRouteCoordinates3");
                 cookie2 = $.cookie("mapRouteCoordinates2");
                 cookie1 = $.cookie("mapRouteCoordinates1");
-                var changerCookie;
+                var changerCookie, changerListCookie;
                 $.cookie.raw = true;
                 if (cookie3 != null) {
                     cookie3 = cookie3.split('&');
@@ -263,17 +277,26 @@ function getMap() {
 
                     if (cookieArray3[0] == id) {
                         $.cookie("mapRouteCoordinates3", null, { expires: -1 });
+                        $.removeCookie("mapRouteCoordinates3", { path: '/' });
                     }
                     else if (cookieArray2[0] == id) {
                         changerCookie = $.cookie("mapRouteCoordinates3");
+                        changerListCookie = $.cookie("mapRouteCoordinates3");
                         $.cookie("mapRouteCoordinates2", changerCookie, { expires: 10 });
+                        $.cookie("mapRouteCoordinates2", changerListCookie, { path: '/' }, { expires: 10 });
+                        $.removeCookie("mapRouteCoordinates3", { path: '/' });
                         $.cookie("mapRouteCoordinates3", null, { expires: -1 });
                     }
                     else if (cookieArray1[0] == id) {
                         changerCookie = $.cookie("mapRouteCoordinates2");
+                        changerListCookie = $.cookie("mapRouteCoordinates2");
                         $.cookie("mapRouteCoordinates1", changerCookie, { expires: 10 });
+                        $.cookie("mapRouteCoordinates1", changerListCookie, { path: '/' }, { expires: 10 });
                         changerCookie = $.cookie("mapRouteCoordinates3");
+                        changerListCookie = $.cookie("mapRouteCoordinates3");
                         $.cookie("mapRouteCoordinates2", changerCookie, { expires: 10 });
+                        $.cookie("mapRouteCoordinates2", changerListCookie, { path: '/' }, { expires: 10 });
+                        $.removeCookie("mapRouteCoordinates3", { path: '/' });
                         $.cookie("mapRouteCoordinates3", null, { expires: -1 });
                     }
                     drawRouteWithCookies();
@@ -292,21 +315,101 @@ function getMap() {
 
                     if (cookieArray2[0] == id) {
                         $.cookie("mapRouteCoordinates2", null, { expires: -1 });
+                        $.removeCookie("mapRouteCoordinates2", { path: '/' });
                     }
                     else if (cookieArray1[0] == id) {
                         changerCookie = $.cookie("mapRouteCoordinates2");
+                        changerListCookie = $.cookie("mapRouteCoordinates2");
                         $.cookie("mapRouteCoordinates1", changerCookie, { expires: 10 });
+                        $.cookie("mapRouteCoordinates1", changerListCookie, { path: '/' }, { expires: 10 });
                         $.cookie("mapRouteCoordinates2", null, { expires: -1 });
+                        $.removeCookie("mapRouteCoordinates2", { path: '/' });
                     }
                     drawRouteWithCookies();
                 }
                 else if (cookie1 != null) {
                     $.cookie("mapRouteCoordinates1", null, { expires: -1 });
+                    $.removeCookie("mapRouteCoordinates1", { path: '/' });
                     drawRouteWithCookies();
                 }
             }
+
+            cookie3 = $.cookie("mapRouteCoordinates3");
+            cookie2 = $.cookie("mapRouteCoordinates2");
+            cookie1 = $.cookie("mapRouteCoordinates1");
+            if (cookie1 == null && cookie2 == null && cookie3 == null) {
+                $('#infList').html('Listeniz şuanda boş');
+                $('#showRouteList').prop("disabled", true);
+            }
+            else {
+                $('#infList').html('');
+                $('#showRouteList').prop("disabled", false);
+            }
         }
     });
+}
+
+function showList() {
+    var cookie3, cookieArray3 = [], cookies3 = [];
+    var cookie2, cookieArray2 = [], cookies2 = [];
+    var cookie1, cookieArray1 = [], cookies1 = [];
+    var productIDArray = new Array();
+    cookie3 = $.cookie("mapRouteCoordinates3");
+    cookie2 = $.cookie("mapRouteCoordinates2");
+    cookie1 = $.cookie("mapRouteCoordinates1");
+
+    if (cookie3 != null) {
+        cookie3 = cookie3.split('&');
+        cookie2 = cookie2.split('&');
+        cookie1 = cookie1.split('&');
+
+        for (i = 0; i < cookie3.length; i++) {
+            cookies3 = cookie3[i].split('=');
+            cookieArray3[i] = cookies3[1];
+
+            cookies2 = cookie2[i].split('=');
+            cookieArray2[i] = cookies2[1];
+
+            cookies1 = cookie1[i].split('=');
+            cookieArray1[i] = cookies1[1];
+        }
+        productIDArray[0] = cookieArray1[0];
+        productIDArray[1] = cookieArray2[0];
+        productIDArray[2] = cookieArray3[0];
+    }
+    else if (cookie2 != null) {
+        cookie2 = cookie2.split('&');
+        cookie1 = cookie1.split('&');
+
+        for (i = 0; i < cookie2.length; i++) {
+            cookies2 = cookie2[i].split('=');
+            cookieArray2[i] = cookies2[1];
+
+            cookies1 = cookie1[i].split('=');
+            cookieArray1[i] = cookies1[1];
+        }
+        productIDArray[0] = cookieArray1[0];
+        productIDArray[1] = cookieArray2[0];
+    }
+    else if (cookie1 != null) {
+        cookie1 = cookie1.split('&');
+
+        for (i = 0; i < cookie1.length; i++) {
+            cookies1 = cookie1[i].split('=');
+            cookieArray1[i] = cookies1[1];
+        }
+        productIDArray[0] = cookieArray1[0];
+    }
+    productIDArray = productIDArray.reverse();
+    $.post('../ShowRouteList',
+        {
+            productID: productIDArray
+        },
+        function (data) {
+            $('#modelView .modal-body').html(data);
+            $('#modelView').modal('show');
+        });
+
 }
 
 function drawMap(finditScreenX, finditScreenY) {
@@ -477,7 +580,7 @@ function drawMap(finditScreenX, finditScreenY) {
                             ctx.fillStyle = '#3dd1ff';
                             break
                         default:
-                            ctx.fillStyle = '#5aa457'
+                            ctx.fillStyle = '#1f497d'
                     }
                     ctx.fillRect(y * tileW, x * tileH, tileW, tileH)
                 }

@@ -6,6 +6,7 @@ using FindIt.Models;
 using System.Data;
 using System.Configuration;
 using System.Web;
+using System.Collections.Generic;
 
 namespace FindIt.Controllers
 {
@@ -16,10 +17,6 @@ namespace FindIt.Controllers
         SqlDataReader reader;
         SqlCommand command;
         // GET: ProductDetails
-        public ActionResult Index()
-        {
-            return View();
-        }
         public ActionResult Detail(int? id)
         {
             SqlParameter pOutProductPrice = new SqlParameter("@ProductPrice", SqlDbType.Decimal, 18)
@@ -125,6 +122,19 @@ namespace FindIt.Controllers
             return PartialView(model);
         }
 
+        [HttpPost]
+        public ActionResult ShowRouteList(string[] productID)
+        {
+            var model = new List<ProductRouteList>();
+            for (int i = 0; i < productID.Length; i++)
+            {
+                SqlParameter pProductID = new SqlParameter("@productID", Convert.ToInt16(productID[i]));
+                var items = db.Database.SqlQuery<ProductRouteList>("sp_RouteListProducts @productID", pProductID).ToList();
+                model.Add(new ProductRouteList { productName = items[0].productName, productImage = items[0].productImage, subCategoryName = items[0].subCategoryName });
+            }
+
+            return PartialView(model);
+        }
         [HttpPost]
         public ActionResult MapShown(string id)
         {

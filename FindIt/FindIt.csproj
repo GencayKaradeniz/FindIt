@@ -159,9 +159,12 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\AddShelfviaCategory.cs" />
     <Compile Include="Models\FinditDb.cs" />
     <Compile Include="Models\ProductDetails.cs" />
     <Compile Include="Models\ProductOperationsLists.cs" />
+    <Compile Include="Models\ProductRouteList.cs" />
+    <Compile Include="Models\ProductSearchWithBarcode.cs" />
     <Compile Include="Models\ProductShelfModal.cs" />
     <Compile Include="Models\Raflar.cs" />
     <Compile Include="Models\SearchWithFilter.cs" />
@@ -185,7 +188,9 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Images\coca-cola-zero.jpg" />
     <Content Include="Images\dekor-yagli-boya-fircasi-2-adet__0827176528078006.jpeg" />
+    <Content Include="Images\pepsi-max.jpg" />
     <Content Include="Images\finditlogo.png" />
     <Content Include="Images\indir.jpe" />
     <Content Include="Images\sidebar.jpg" />
@@ -260,6 +265,7 @@
     <Content Include="Panel-Theme\sass\lbd\_variables.scss" />
     <Content Include="Panel-Theme\sass\light-bootstrap-dashboard.scss" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\CategoryOperations.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
@@ -272,6 +278,7 @@
     <Content Include="Scripts\MapCreater.js" />
     <Content Include="Scripts\MapShown.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Scripts\ProductOperations.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\script.js" />
@@ -295,6 +302,8 @@
     <Content Include="Views\Map\MapDetails.cshtml" />
     <Content Include="Views\Map\CategoriesForMap.cshtml" />
     <Content Include="Views\ProductDetails\ShowProductShelfInformation.cshtml" />
+    <Content Include="Views\ProductDetails\ShowRouteList.cshtml" />
+    <Content Include="Views\Map\AddNewShelf.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -1,6 +1,5 @@
 ﻿var shelfs = new Array();
 
-
 function drawShopMap() {
     var ctx = null;
     var shelfL = document.getElementById('shelfLength').value;
@@ -144,10 +143,10 @@ function drawShopMap() {
             for (var y = 0; y < shopW; ++y) {
                 switch (shopMap[x][y]) {
                     case 0:
-                        ctx.fillStyle = '#685b48'
+                        ctx.fillStyle = '#fff'
                         break
                     default:
-                        ctx.fillStyle = '#5aa457'
+                        ctx.fillStyle = '#1f497d'
                 }
                 ctx.fillRect(y * tileW, x * tileH, tileW, tileH)
             }
@@ -184,5 +183,29 @@ function drawShopMap() {
                 }
             }
         });
+    });
+}
+
+function addShelf() {
+    var categoryID = $("#categoryID").val();
+    var shelfID = $("#shelfID").val();
+    $.ajax({
+        type: 'POST',
+        url: '/Map/EditingShelfs',
+        data: JSON.stringify({
+            shelfID: shelfID,
+            categoryID: categoryID
+        }),
+        dataType: "json",
+        contentType: 'application/json; charset=utf-8',
+        success: function (result) {
+            if (result == "OK") {
+                alert("Raf düzenlendi.");
+                location.reload();
+            }
+            else {
+                alert("Raf düzenlenemedi.");
+            }
+        }
     });
 }

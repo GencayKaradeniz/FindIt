@@ -1,0 +1,29 @@
+﻿@model List<FindIt.Models.ProductRouteList>
+@{
+    ViewBag.Title = "ShowRouteList";
+}
+<div class="row">
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th></th>
+                <th>Ürün Resmi</th>
+                <th>Ürün Adı</th>
+                <th>Ürün Kategorisi</th>
+            </tr>
+        </thead>
+        @{int i = 1;}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@i</td>
+                @{i++;
+                }
+                <td><img src="~/@item.productImage" width="75" height="75" class="img-thumbnail" /></td>
+                <td>@item.productName</td>
+                <td>@item.subCategoryName</td>
+            </tr>
+        }
+    </table>
+</div>
+

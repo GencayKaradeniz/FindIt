@@ -28,112 +28,105 @@
         });
     });
 </script>
-@using (Html.BeginForm("ProductOperations", "ProductOperations", FormMethod.Post))
-{
-        <div class="col-md-8">
-            <div class="card">
-                <div class="header">
-                    <h4>Ürün İşlemleri</h4>
+<script src="~/Scripts/ProductOperations.js"></script>
+<div class="col-md-8">
+    <div class="card">
+        <div class="header">
+            <h4>Ürün İşlemleri</h4>
+        </div>
+        <div class="content">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>Ürün Ad</label>
+                        <input type="text" id="productName" name="productName" class="form-control" placeholder="Ürün Adı" />
+                    </div>
                 </div>
-                <div class="content">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label>Ürün Ad</label>
-                                <input type="text" name="productName" class="form-control" placeholder="Ürün Adı" />
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label>Ürün Barkod</label>
-                                <input type="text" name="productBarcode" class="form-control" placeholder="Ürün Barkodu" />
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label>Kategoriler</label>
-                                @Html.DropDownListFor(m => m.CategoryID, Model.Categories, new { @class = "form-control" })
-                                @*@Html.DropDownList("CategoryList", ViewBag.listCategories as SelectList, "Lütfen Seçiniz", new { @class = "form-control" })*@
-                                <label name="currentCategory" style="color:gray;font-weight:bold;">Şuanki kategorisi</label>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label>Alt Kategoriler</label>
-                                @Html.DropDownListFor(m => m.SubCategoryID, Model.SubCategories, new { @class = "form-control" })
-                                @*@Html.DropDownList("SubCategoryList", ViewBag.listSubCategories as SelectList, "Lütfen Seçiniz", new { @class = "form-control" })*@
-                                <label name="currentSubCategory" style="color:gray;font-weight:bold;">Şuanki alt kategorisi</label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label>Ürün Fiyat</label>
-                                <input type="text" class="form-control" name="productCost" value="" />
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label>Ürün Stok</label>
-                                <input type="number" class="form-control" name="productStock" />
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label>Ürün Özellikleri</label>
-                                <textarea name="productFeatures" class="form-control" placeholder="Ürün özelliklerini giriniz" style="resize:none;"></textarea>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label>Ürün Görselleri</label>
-                                <label class="btn btn-default" data-toggle="tooltip" title="İlk seçilen görsel anasayfada gözükür.">
-                                    <input type="file" name="singlePicture" accept="image/*" value="" multiple>
-                                </label>
-                            </div>
-                        </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>Ürün Barkod</label>
+                        <input type="text" id="productBarcode" name="productBarcode" class="form-control" placeholder="Ürün Barkodu" />
                     </div>
                 </div>
             </div>
-        </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>Kategoriler</label>
+                        @Html.DropDownListFor(m => m.CategoryID, Model.Categories, new { @class = "form-control" })
+                        <label name="currentCategory" style="color:gray;font-weight:bold;">Şuanki kategorisi : </label><label id="categorySaved" style="color:crimson;font-weight:bold;"></label>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>Alt Kategoriler</label>
+                        @Html.DropDownListFor(m => m.SubCategoryID, Model.SubCategories, new { @class = "form-control" })
+                        <label name="currentSubCategory" style="color:gray;font-weight:bold;">Şuanki alt kategorisi : </label><label id="subCategorySaved" style="color:crimson;font-weight:bold;"></label>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>Ürün Fiyat</label>
+                        <input type="text" id="productCost" class="form-control" name="productCost" value="" />
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>Ürün Stok</label>
+                        <input type="number" class="form-control" id="productStock" name="productStock" />
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>Ürün Özellikleri</label>
+                        <textarea id="productFeatures" name="productFeatures" class="form-control" placeholder="Ürün özelliklerini giriniz" style="resize:none;"></textarea>
+                    </div>
+                </div>
 
-        <div class="col-md-4">
-            <div class="card">
-                <div class="header">
-                    <h4>İşlem</h4>
-                </div>
-                <div class="content">
-                    <div class="row">
-                        <div class="col-md-10 col-md-offset-1">
-                            <div class="col-sm-10">
-                                <div class="form-group">
-                                    <label>Barkod ile arama</label>
-                                    <input type="text" class="form-control" name="search" placeholder="Barkod giriniz." />
-                                    <label style="color:red;font-weight:bold;visibility:visible;"></label>
-                                    <asp:Label ID="Label_SearchNotFound" runat="server" ForeColor="Red" Font-Bold="True" Visible="False"></asp:Label>
-                                </div>
-                            </div>
-                            <div class="col-sm-2">
-                                <label></label>
-                                <button class="btn btn-fill btn-info">Ara</button>
-                            </div>
-                            <div class="col-md-4">
-                                @*<input type="submitid" id="btnProductAdd" class="btn btn-fill btn-success" style="width:100px;margin-bottom:10px;" value="Ekle" />*@
-                                <button type="submit" class="btn btn-fill btn-success" style="width:100px;margin-bottom:10px;">Ekle</button>
-                                <button class="btn btn-fill btn-danger" style="width:100px;margin-bottom:10px;">Sil</button>
-                                <button class="btn btn-fill btn-primary" style="width:100px;margin-bottom:10px;">Güncelle</button>
-                            </div>
-                            <div class="col-md-8"></div>
-                        </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>Ürün Görselleri</label>
+                        <label class="btn btn-default" data-toggle="tooltip" title="İlk seçilen görsel anasayfada gözükür.">
+                            <input type="file" id="singlePicture" name="singlePicture" accept="image/*" value="" multiple>
+                        </label>
                     </div>
                 </div>
             </div>
         </div>
-}
+    </div>
+</div>
+<div class="col-md-4">
+    <div class="card">
+        <div class="header">
+            <h4>İşlem</h4>
+        </div>
+        <div class="content">
+            <div class="row">
+                <div class="col-md-10 col-md-offset-1">
+                    <div class="col-sm-10">
+                        <div class="form-group">
+                            <label>Barkod ile arama</label>
+                            <input type="text" class="form-control" id="search" name="search" placeholder="Barkod giriniz." />
+                            <label style="color:red;font-weight:bold;visibility:visible;"></label>
+                            <asp:Label ID="Label_SearchNotFound" runat="server" ForeColor="Red" Font-Bold="True" Visible="False"></asp:Label>
+                        </div>
+                    </div>
+                    <div class="col-sm-2">
+                        <label></label>
+                        <button class="btn btn-fill btn-info" onclick="ProductSearch()">Ara</button>
+                    </div>
+                    <div class="col-md-4">
+                        <button class="btn btn-fill btn-success" onclick="ProductAdd()" style="width:100px;margin-bottom:10px;">Ekle</button>
+                        <button class="btn btn-fill btn-danger" onclick="ProductDelete()" style="width:100px;margin-bottom:10px;">Sil</button>
+                        <button class="btn btn-fill btn-primary" onclick="ProductUpdate()"style="width:100px;margin-bottom:10px;">Güncelle</button>
+                    </div>
+                    <div class="col-md-8"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
